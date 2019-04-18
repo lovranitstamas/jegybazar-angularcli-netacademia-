@@ -1,50 +1,5 @@
 <div class="content-container">
 
-  <!-- built-in directives -->
-  <p class="font-weight-bold">List</p>
-  <ul>
-    <li *ngFor="let event of events">
-      {{event}}
-    </li>
-  </ul>
-  <hr>
-
-  <p class="font-weight-bold">ngIf</p>
-  <div *ngIf="show">
-    <p>Tamás</p>
-  </div>
-  <hr>
-
-  <p class="font-weight-bold">ngClass</p>
-  <div [ngClass]="{'valami':true}">
-    <p>
-      ngClass demo
-    </p>
-  </div>
-
-  <div [ngClass]="{'valami':show}">
-    <p>
-      ngClass demo
-    </p>
-  </div>
-  <hr>
-
-  <p class="font-weight-bold">Toggle with button</p>
-
-  <button
-    (click)="toggleBackgroundColor()"
-  >Toggle background color
-  </button>
-
-  <button (mouseover)="demo($event)">Event</button>
-
-  <button
-    [disabled]="klikk"
-  >Disabled
-  </button>
-
-  <input [(ngModel)]="inputContent" type="text"> {{inputContent}}
-
   <!-- navbar -->
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
