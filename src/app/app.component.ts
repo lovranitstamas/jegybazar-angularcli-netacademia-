@@ -8,5 +8,16 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'jegybazarnewversion';
 
+  pipeDemo = [
+    {
+      id: 1,
+      name: 'puffancs'
+    },
+    {
+      id: 2,
+      name: 'puffancs'
+    }
+  ];
+
 }
 
