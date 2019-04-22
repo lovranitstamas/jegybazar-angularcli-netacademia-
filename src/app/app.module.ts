@@ -21,6 +21,7 @@ import { BidComponent } from './bid/bid.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { TicketComponent } from './ticket/ticket.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,24 +30,26 @@ import { TicketComponent } from './ticket/ticket.component';
     JumbotronComponent,
     EventcardComponent,
     FooterComponent,
-    EventComponent,
-    LoginComponent,
-    RegistrationComponent,
+    // EventComponent, moved in app-routing.module.ts
+    ...AppRoutingModule.routableComponents
+    /*LoginComponent, moved in app-routing.module.ts
+    RegistrationComponent, moved in app-routing.module.ts
     ProfileComponent,
     ProfileEditComponent,
     EventDetailComponent,
     EventListComponent,
-    PageNotFoundComponent,
-    AboutComponent,
-    HomeComponent,
+    PageNotFoundComponent, moved in app-routing.module.ts
+    AboutComponent, moved in app-routing.module.ts
+    HomeComponent, moved in app-routing.module.ts
     BidComponent,
     TicketDetailComponent,
     TicketListComponent,
-    TicketComponent
+    TicketComponent moved in app-routing.module.ts*/
   ],
   imports: [
     BrowserModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
