@@ -1,3 +1,69 @@
-<p>
-  ticket-detail works!
-</p>
+<!--Form with header-->
+<div class="card mb-4 col-11 col-sm-8 mx-auto p-0">
+
+  <div class="card-header">
+    <div class="bg-light text-center">
+      <h3>Új jegy</h3>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <!--card-body-->
+
+    <div class="form-group">
+      <label for="select">Esemény választása</label>
+      <select class="form-control" id="select">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="idopont">Időpont</label>
+      <input class="form-control mb-3" id="idopont" placeholder="időpont" type="date">
+    </div>
+
+    <div class="form-group">
+      <label for="eloado">Előadó</label>
+      <input class="form-control mb-3" id="eloado" placeholder="előadó" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="darab">Darabszám</label>
+      <input class="form-control mb-3" id="darab" placeholder="darabszám" type="number">
+    </div>
+
+    <h4 class="my-3">Licit beállítások</h4>
+
+    <div class="form-group">
+      <label for="minlicit">Minimum licit érték</label>
+      <input class="form-control mb-3" id="minlicit" placeholder="Minimum licit érték" type="number">
+    </div>
+
+    <div class="form-group">
+      <label for="lepcso">Licit lépcső érték</label>
+      <input class="form-control mb-3" id="lepcso" placeholder="Licit lépcső érték" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="ertek">Licit kezdete</label>
+      <input class="form-control mb-3" id="inlineFormInputGroupUsername" placeholder="Licit kezdete" type="date">
+    </div>
+
+    <div class="form-group">
+      <label>Licit vége</label>
+      <input class="form-control mb-3" id="ertek" placeholder="Licit vége" type="date">
+    </div>
+
+
+    <div class="text-center mb-3">
+      <a class="btn btn-primary btn-lg" routerLink="../list">Licit indítása</a>&nbsp;
+      <a class="btn btn-secondary btn-lg" routerLink="../list">Mégsem</a>
+    </div>
+
+  </div>
+</div>

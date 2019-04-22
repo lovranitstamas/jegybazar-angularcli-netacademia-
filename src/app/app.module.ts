@@ -41,9 +41,9 @@ import {AppRoutingModule} from './app-routing.module';
     PageNotFoundComponent, moved in app-routing.module.ts
     AboutComponent, moved in app-routing.module.ts
     HomeComponent, moved in app-routing.module.ts
-    BidComponent,
-    TicketDetailComponent,
-    TicketListComponent,
+    BidComponent  moved in app-routing.module.ts!!!!!!,
+    TicketDetailComponent  moved in app-routing.module.ts,
+    TicketListComponent, moved in app-routing.module.ts
     TicketComponent moved in app-routing.module.ts*/
   ],
   imports: [
