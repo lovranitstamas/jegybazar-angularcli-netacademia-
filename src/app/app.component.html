@@ -1,5 +1,28 @@
 <div class="content-container">
 
+  <ul class="mt-5">
+    <li *ngFor="let event of events">
+      <img [src]="event.pic" alt="" height="50px" width="50px">
+      {{ event.id }}: {{ event.name }}
+      <button (click)="edit(event.id)">Edit</button>
+      <button (click)="delete(event.id)">Remove</button>
+    </li>
+  </ul>
+
+  <p>
+    <label for="eventname" class="mr-3">Esemény neve: </label>
+    <input #newEventNameInput id="eventname" type="text" [value]="modifyEvent.name">
+  </p>
+  <p>
+    <label for="eventpic" class="mr-3">Eseményhez tartozó kép URL-je: </label>
+    <input #newEventPicInput id="eventpic" type="text" [value]="modifyEvent.pic">
+  </p>
+  <button (click)="save(newEventNameInput, newEventPicInput)">Save</button>
+
+  <pre>
+    {{ events | json }}
+  </pre>
+
   <!-- navbar -->
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
