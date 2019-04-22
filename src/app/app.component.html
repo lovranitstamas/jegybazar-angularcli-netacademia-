@@ -3,19 +3,19 @@
   <ul class="mt-5">
     <li *ngFor="let event of events">
       <img [src]="event.pic" alt="" height="50px" width="50px">
-      {{ event.id }}: {{ event.name }}
+      {{ event.id }}: {{ event.name | uppercase | azenpipom:3 }}
       <button (click)="edit(event.id)">Edit</button>
       <button (click)="delete(event.id)">Remove</button>
     </li>
   </ul>
 
   <p>
-    <label for="eventname" class="mr-3">Esemény neve: </label>
-    <input #newEventNameInput id="eventname" type="text" [value]="modifyEvent.name">
+    <label class="mr-3" for="eventname">Esemény neve: </label>
+    <input #newEventNameInput [value]="modifyEvent.name" id="eventname" type="text">
   </p>
   <p>
-    <label for="eventpic" class="mr-3">Eseményhez tartozó kép URL-je: </label>
-    <input #newEventPicInput id="eventpic" type="text" [value]="modifyEvent.pic">
+    <label class="mr-3" for="eventpic">Eseményhez tartozó kép URL-je: </label>
+    <input #newEventPicInput [value]="modifyEvent.pic" id="eventpic" type="text">
   </p>
   <button (click)="save(newEventNameInput, newEventPicInput)">Save</button>
 

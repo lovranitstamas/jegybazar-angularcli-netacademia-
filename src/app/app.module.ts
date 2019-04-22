@@ -3,10 +3,12 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {CollapseModule} from 'ngx-bootstrap';
+import { AzenpipomPipe } from './azenpipom.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AzenpipomPipe
   ],
   imports: [
     BrowserModule,
