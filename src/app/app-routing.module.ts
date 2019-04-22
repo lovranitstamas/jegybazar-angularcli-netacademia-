@@ -8,6 +8,8 @@ import {TicketComponent} from './ticket/ticket.component';
 import {AboutComponent} from './about/about.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ProfileEditComponent} from './profile-edit/profile-edit.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -23,6 +25,13 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
+  {
+    path: 'user',
+    children: [
+      {path: '', component: ProfileComponent},
+      {path: 'edit', component: ProfileEditComponent}
+    ]
+  },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
@@ -43,6 +52,8 @@ export class AppRoutingModule {
     AboutComponent,
     LoginComponent,
     RegistrationComponent,
+    ProfileComponent,
+    ProfileEditComponent,
     PageNotFoundComponent
   ];
 }

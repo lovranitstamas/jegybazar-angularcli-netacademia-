@@ -16,7 +16,7 @@
       <div class="card border-secondary">
         <div class="card-header">Regisztráció</div>
         <div class="card-body">
-          <form id="registerForm">
+          <form id="registerForm" novalidate>
             <div class="form-group">
               <label for="registerName">Név</label>
               <input class="form-control" id="registerName" name="registerName" placeholder="név" required>
@@ -74,7 +74,7 @@
               <input class="form-control" id="registerPassword2" name="registerPassword2" placeholder="jelszó ismét" required
                      type="password">
             </div>
-            <button class="btn btn-primary" type="submit">regisztráció</button>
+            <a routerLink="/user" class="btn btn-primary" type="submit">Regisztráció</a>
           </form>
         </div>
       </div>
