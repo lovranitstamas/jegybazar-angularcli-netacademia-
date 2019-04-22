@@ -36,8 +36,8 @@ import {AppRoutingModule} from './app-routing.module';
     RegistrationComponent, moved in app-routing.module.ts
     ProfileComponent,
     ProfileEditComponent,
-    EventDetailComponent,
-    EventListComponent,
+    EventDetailComponent,  moved in app-routing.module.ts
+    EventListComponent,  moved in app-routing.module.ts
     PageNotFoundComponent, moved in app-routing.module.ts
     AboutComponent, moved in app-routing.module.ts
     HomeComponent, moved in app-routing.module.ts
