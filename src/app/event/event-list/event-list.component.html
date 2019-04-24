@@ -19,9 +19,11 @@
 </div>
 
 <div class="card-deck">
-  <app-eventcard
-    *ngFor="let event of events"
-    [event]="event"
-    class="col col-md-6 col-lg-4">
-  </app-eventcard>
+  <div *ngFor="let evg of eventsGrouppedBy3" class="card-deck pt-5 pb-5">
+    <app-eventcard
+      *ngFor="let event of evg"
+      [event]="event"
+      class="col col-md-6 col-lg-4">
+    </app-eventcard>
+  </div>
 </div>
