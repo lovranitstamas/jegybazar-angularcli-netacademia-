@@ -3,7 +3,7 @@
   <div class="col-auto text-center">
     <label>Keresés az események között</label>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Esemény neve">
+      <input class="form-control mr-sm-2" placeholder="Esemény neve" type="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés</button>
     </form>
   </div>
@@ -13,25 +13,15 @@
       <label>Eseményt szeretnék létrehozni</label>
     </div>
     <div class="w-100"></div>
-    <div><a routerLink="/event/new" class="btn btn-primary" role="button">Új esemény létrehozása</a></div>
+    <div><a class="btn btn-primary" role="button" routerLink="/event/new">Új esemény létrehozása</a></div>
   </div>
 
 </div>
 
 <div class="card-deck">
-  <div class="card-deck pt-5 pb-5">
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-  </div>
-  <div class="card-deck pt-5 pb-5">
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-  </div>
-  <div class="card-deck pt-5 pb-5">
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-    <app-eventcard class="col col-md-6 col-lg-4"></app-eventcard>
-  </div>
+  <app-eventcard
+    *ngFor="let event of events"
+    [event]="event"
+    class="col col-md-6 col-lg-4">
+  </app-eventcard>
 </div>
