@@ -10,6 +10,7 @@ import {FooterComponent} from './core/footer/footer.component';
 import {AppRoutingModule} from './app-routing.module';
 import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
+import {TicketService} from './shared/ticket.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {UserService} from './shared/user.service';
     AppRoutingModule,
     AlertModule.forRoot()
   ],
-  providers: [EventService, UserService],
+  providers: [EventService, UserService, TicketService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

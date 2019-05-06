@@ -33,95 +33,18 @@
   </thead>
 
   <tbody>
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>5 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
+  <tr *ngFor="let ticket of tickets">
+    <td scope="row">
+      <a [routerLink]="['/event', ticket.eventId]">
+        {{ ticket.event.name }}
+      </a>
+    </td>
+    <td>{{ ticket.date }}</td>
+    <td class="d-none d-md-table-cell">{{ ticket.seller.name }}</td>
+    <td class="d-none d-md-table-cell">{{ ticket.numberOfTickets }}</td>
+    <td><a [routerLink]="['/ticket', ticket.id]">Tovább a licithez</a></td>
   </tr>
 
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
-
-  <tr>
-    <th data-placement="bottom" data-toggle="tooltip" scope="row"
-        title="Még 3 napig lehet licitálni, az esemény megtekintéséhez kattints ide"><a href="#">Sziget fesztivál</a>
-    </th>
-    <td>2018.08.03. 13:00</td>
-    <td>Példa Jóska</td>
-    <td>3 db</td>
-    <td><a routerLink="/ticket/3">Tovább a licithez</a></td>
-  </tr>
 
   </tbody>
 </table>
