@@ -73,4 +73,8 @@ export class UserService {
     const user = this._allUsers.filter(u => u.id === id);
     return user.length > 0 ? user[0] : new UserModel(UserModel.emptyUser);
   }
+
+  getCurrentUser() {
+    return this._user;
+  }
 }
