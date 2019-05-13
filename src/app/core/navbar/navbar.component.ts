@@ -7,7 +7,7 @@ import {UserService} from '../../shared/user.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public isCollapsed = false;
+  public isCollapsed = true;
 
   constructor(public userService: UserService) {
   }
