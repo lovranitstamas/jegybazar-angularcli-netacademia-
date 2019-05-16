@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EventService} from '../../shared/event.service';
 import {EventModel} from '../../shared/event-model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-event-detail',
@@ -11,7 +12,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class EventDetailComponent implements OnInit {
   event: EventModel;
 
-  constructor(private _route: ActivatedRoute, private _router: Router, private _eventService: EventService) {
+  constructor(private _route: ActivatedRoute, 
+              private _router: Router, 
+              private _eventService: EventService, 
+              private _location: Location) {
   }
 
   ngOnInit() {
@@ -34,7 +38,8 @@ export class EventDetailComponent implements OnInit {
       this._eventService.create(this.event);
     }
 
-    this._router.navigate(['/event/list']);
+    //this._router.navigate(['/event/list']);
+    this._location.back();
   };
 
 }

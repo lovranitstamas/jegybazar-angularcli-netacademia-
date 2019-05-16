@@ -8,12 +8,12 @@
     </form>
   </div>
 
-  <div class="my-2 my-lg-0 text-center">
+  <div class="my-2 my-lg-0 text-center" *ngIf="userService.isLoggedIn">
     <div>
       <label>Eseményt szeretnék létrehozni</label>
     </div>
     <div class="w-100"></div>
-    <div><a class="btn btn-primary" role="button" routerLink="/event/new">Új esemény létrehozása</a></div>
+    <div><a class="btn btn-primary" role="button" routerLink="./new">Új esemény létrehozása</a></div>
   </div>
 
 </div>

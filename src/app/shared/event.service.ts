@@ -9,44 +9,44 @@ export class EventService {
     this._events = [
       new EventModel({
         id: 1,
-        name: 'Sziget Fesztivál',
+        name: 'Fezen',
         date: '2017-08-03',
-        pictureURL: 'assets/sziget.png',
+        pictureURL: 'http://mafsz.org/wp-content/uploads/2014/05/fezen.png',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo.'
       }),
       new EventModel({
         id: 2,
-        name: 'Diótörő Balett',
+        name: 'SZIN',
         date: '2017-11-23',
-        pictureURL: 'assets/diotoro.jpg',
+        pictureURL: 'https://www.koncert.hu/uploads/concerts/koncert-20140625-11470-szin_2014_2.jpg',
         description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.'
       }),
       new EventModel({
         id: 3,
-        name: 'Macskák Musical',
+        name: 'Rockmaraton',
         date: '2018-02-11',
-        pictureURL: 'assets/macskak.jpg',
+        pictureURL: 'http://www.rockmaraton.hu/media/images/rockmaraton-2018-jegyvasarlas.jpg',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, necessitatibus.'
       }),
       new EventModel({
         id: 4,
-        name: 'Sziget Fesztivál',
+        name: 'Black Hat USA',
         date: '2017-08-03',
-        pictureURL: 'assets/sziget.png',
+        pictureURL: 'https://www.blackhat.com/images/page-graphics/metatag/event-logo-us17.png',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo.'
       }),
       new EventModel({
         id: 5,
-        name: 'Diótörő Balett',
+        name: 'TEdx',
         date: '2017-11-23',
-        pictureURL: 'assets/diotoro.jpg',
+        pictureURL: 'https://i0.wp.com/www.tedxwellington.com/wp-content/uploads/2017/02/tedx-bulb.jpg',
         description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.'
       }),
       new EventModel({
         id: 6,
-        name: 'Macskák Musical',
+        name: 'ng-conf',
         date: '2018-02-11',
-        pictureURL: 'assets/macskak.jpg',
+        pictureURL: 'https://cdn-images-1.medium.com/max/1270/1*2j7MOWb0s5pZpQLu7d-5CQ.png',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, necessitatibus.'
       }),
       new EventModel({

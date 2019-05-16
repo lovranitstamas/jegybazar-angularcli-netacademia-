@@ -20,17 +20,17 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {
     path: 'event', component: EventComponent, children: [
-      {path: 'list', component: EventListComponent},
-      {path: 'new', component: EventDetailComponent},
-      {path: ':id', component: EventDetailComponent}
+      {path: '', component: EventListComponent},
+      {path: 'new', component: EventDetailComponent, canActivate: [LoggedInGuard]},
+      {path: ':id', component: EventDetailComponent, canActivate: [LoggedInGuard]}
     ]
   },
   {
     path: 'ticket', component: TicketComponent,
     children: [
-      {path: 'list', component: TicketListComponent},
-      {path: 'new', component: TicketDetailComponent},
-      {path: ':id', component: BidComponent}
+      {path: '', component: TicketListComponent},
+      {path: 'new', component: TicketDetailComponent, canActivate: [LoggedInGuard]},
+      {path: ':id', component: BidComponent, canActivate: [LoggedInGuard]}
     ]
   },
   {path: 'about', component: AboutComponent},

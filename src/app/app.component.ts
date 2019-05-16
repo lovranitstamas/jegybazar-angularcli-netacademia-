@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {UserService} from './shared/user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  constructor(private _userService: UserService) {
+    this._userService.login('angular', 'angular');
+  }
 
 }
 

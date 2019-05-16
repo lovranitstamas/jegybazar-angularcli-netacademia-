@@ -15,11 +15,11 @@ export class UserModel {
   // UserModel.exapmleUser
   static get exampleUser(): UserModel {
     return {
-      id: 0,
-      name: 'Legyek Réka Matilda',
-      email: 'reka@vipmail.hu',
-      address: 'Laktanya u. 7',
-      dateOfBirth: '2001.11.01',
+      id: 1,
+      name: 'Pista ba',
+      email: 'pistaba@pistaba.com',
+      address: 'pistaba lak 12',
+      dateOfBirth: '1900-01-01',
       gender: 'male'
     };
   }
