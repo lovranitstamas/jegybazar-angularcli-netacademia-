@@ -3,6 +3,7 @@ import {EventService} from '../../shared/event.service';
 import {EventModel} from '../../shared/event-model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -11,11 +12,13 @@ import {Location} from '@angular/common';
 })
 export class EventDetailComponent implements OnInit {
   event: EventModel;
+  editForm = false;
 
   constructor(private _route: ActivatedRoute, 
-              private _router: Router, 
+              //private _router: Router, 
               private _eventService: EventService, 
-              private _location: Location) {
+              private _location: Location,
+              public userService: UserService) {
   }
 
   ngOnInit() {
@@ -23,6 +26,7 @@ export class EventDetailComponent implements OnInit {
     if (evId) {
       this.event = this._eventService.getEventById(evId);
     } else {
+      this.editForm = true;
       this.event = new EventModel(EventModel.emptyEvent);
     }
   }
@@ -41,5 +45,9 @@ export class EventDetailComponent implements OnInit {
     //this._router.navigate(['/event/list']);
     this._location.back();
   };
+
+  navigateBack() {
+    this._location.back();
+  }
 
 }
