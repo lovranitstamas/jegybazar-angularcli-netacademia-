@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UserService} from './shared/user.service';
+//import {UserService} from './shared/user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,9 @@ import {UserService} from './shared/user.service';
 })
 export class AppComponent {
 
-  constructor(private _userService: UserService) {
+  /*constructor(private _userService: UserService) {
     this._userService.login('angular', 'angular');
-  }
+  }*/
 
 }
 

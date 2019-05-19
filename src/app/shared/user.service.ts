@@ -16,9 +16,11 @@ export class UserService {
 
   login(email: string, password: string): boolean {
     if (email === 'angular' && password === 'angular') {
-      this._user = new UserModel(UserModel.exampleUser);
+      //this._user = new UserModel(UserModel.exampleUser);
+      this._user = this._allUsers[0];
       this.isLoggedIn = true;
-      this._router.navigate(['/user']);
+      //this._router.navigate(['/user']);
+      return true;
     }
 
     console.log('Login: ' + this.isLoggedIn);
@@ -27,13 +29,24 @@ export class UserService {
 
   register(param?: UserModel) {
     if (param) {
+      this._user = new UserModel({
+        id: 4,
+        ...param
+      });
+
+      this._allUsers = [
+        ...this._allUsers,
+        this._user
+      ];
+    }
+    /*if (param) {
       this._user = new UserModel(param);
     } else {
       this._user = new UserModel(UserModel.exampleUser);
-    }
+    }*/
     this.isLoggedIn = true;
     console.log('Login: ' + this.isLoggedIn);
-    this._router.navigate(['/user']);
+    //this._router.navigate(['/user']);
   }
 
   logout() {
@@ -65,7 +78,7 @@ export class UserService {
         address: 'pistaba lak 12',
         dateOfBirth: '1900-01-01',
         gender: 'male',
-        profilePictureUrl: 'https://www.minihero.hu/wp-content/uploads/funko-pop-ifju-satan.jpg'
+        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
       }),
       new UserModel({
         id: 2,
@@ -74,7 +87,7 @@ export class UserService {
         address: 'marcsa var 42.',
         dateOfBirth: '2000-01-01',
         gender: 'female',
-        profilePictureUrl: 'https://www.minihero.hu/wp-content/uploads/funko-pop-ifju-satan.jpg'
+        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
       }),
       new UserModel({
         id: 3,
@@ -83,7 +96,7 @@ export class UserService {
         address: 'namek',
         dateOfBirth: '2199-02-01',
         gender: 'satan fattya',
-        profilePictureUrl: 'https://www.minihero.hu/wp-content/uploads/funko-pop-ifju-satan.jpg'
+        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
       }),
     ];
   }
