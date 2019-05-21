@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: { 
+    baseUrl: 'https://jegybazar-angular.firebaseio.com', 
+    registrationUrl: ' https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser', 
+    loginUrl: ' https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword', 
+    apikey: 'AIzaSyDAScJirfNPoV6i2ZZHwGDUmRO9JSFFKqA ' 
+  } 
 };
 
 /*

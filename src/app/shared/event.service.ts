@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core';
 import {EventModel} from './event-model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class EventService {
   private _events: EventModel[];
 
-  constructor() {
-    this._events = [
+  constructor(private _http: HttpClient) {
+    /*this._events = [
       new EventModel({
         id: 1,
         name: 'Fezen',
@@ -70,12 +74,14 @@ export class EventService {
         pictureURL: 'assets/macskak.jpg',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, necessitatibus.'
       })
-    ];
+    ];*/
 
   }
 
-  getAllEvents(): EventModel[] {
-    return this._events;
+  getAllEvents(): Observable<EventModel[]> {
+    //return this._events;
+    return this._http.get<EventModel[]>(`${environment.firebase.baseUrl}/events.json`).pipe(
+    map(data => Object.values(data).map(evm => new EventModel(evm))));
   }
 
   getEventById(id: number) {
