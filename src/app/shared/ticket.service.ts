@@ -26,7 +26,7 @@ export class TicketService {
   }
 
   create(param: TicketModel) {
-    this._tickets = [
+    /*this._tickets = [
       ...this._tickets,
       new TicketModel({
         id: this._tickets.reduce((x, y) => x.id > y.id ? x : y).id + 1,
@@ -38,7 +38,7 @@ export class TicketService {
         id: this._tickets.reduce((x, y) => x.id > y.id ? x : y).id + 1,
         ...param
       }*/
-    ];
+    /*];*/
   }
 
   private _getMockData() {
