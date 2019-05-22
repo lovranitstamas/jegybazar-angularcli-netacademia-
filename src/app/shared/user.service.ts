@@ -32,6 +32,7 @@ export class UserService {
     console.log('Login: ' + this.isLoggedIn);
     return false;
   }*/
+  
   login(email: string, password: string): Observable<UserModel> {
     return this._http.post<FirebaseLoginModel>(
       `${environment.firebase.loginUrl}?key=${environment.firebase.apikey}`,
