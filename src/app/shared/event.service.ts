@@ -7,8 +7,7 @@ import {map} from 'rxjs/operators';
 
 @Injectable()
 export class EventService {
-  private _events: EventModel[];
-
+  
   constructor(private _http: HttpClient) {
     /*this._events = [
       new EventModel({
@@ -89,29 +88,17 @@ export class EventService {
     //return ev.length > 0 ? ev[0] : new EventModel(EventModel.emptyEvent);
     return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
   }
-
-  update(param: EventModel) {
-    this._events = this._events.map(ev => {
-      /*if (ev.id === param.id) {
-        return {...param}
-      } else {
-        return ev;
-      }*/
-      return ev.id === param.id ? {...param} : ev;
-    });
+  
+  save(param: EventModel) {
+    console.log(param);
+    if (param.id) {
+      return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
+    } else {
+      return this._http.post(`${environment.firebase.baseUrl}/events.json`, param);
+    }
   }
 
-  create(param: EventModel) {
-    this._events = [
-      ...this._events,
-      {
-        id: this._getMaxId() + 1,
-        ...param
-      }
-    ]
-  }
-
-  private _getMaxId() {
-    return this._events.reduce((x, y) => x.id > y.id ? x : y).id;
+  delete(param: EventModel) {
+    return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
   }
 }

@@ -1,3 +1,5 @@
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'; 
+import {AuthInterceptor} from './shared/auth-interceptor'; 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -13,7 +15,6 @@ import {UserService} from './shared/user.service';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,13 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [EventService, UserService, TicketService, LoggedInGuard],
+  providers: [
+    EventService, 
+    UserService, 
+    TicketService, 
+    LoggedInGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

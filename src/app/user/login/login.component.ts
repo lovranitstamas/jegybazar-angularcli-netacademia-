@@ -29,11 +29,11 @@ export class LoginComponent implements OnInit {
   login(email: string, password: string) {
     this._userService.login(email, password).subscribe(
       (user: UserModel) => {
-        console.log('login cmp', user);
+        //console.log('login cmp', user);
         this._router.navigate(['/user']);
       },
       err => {
-        console.warn('Hibára futottunk a logincmp-ben', err);
+        //console.warn('Hibára futottunk a logincmp-ben', err);
         this.error = 'Hiba a belépésnél';
       });
   }

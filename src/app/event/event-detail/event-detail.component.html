@@ -21,7 +21,7 @@
                required
                 name="name"
                 #name="ngModel"
-                [disabled]="!editForm"
+                [disabled]="viewForm"
                 >
                 <alert type="danger" *ngIf="name.touched && name.invalid">Kötelező mező!</alert>
       </div>
@@ -37,7 +37,7 @@
                required
                name="date"
                #date="ngModel"
-               [disabled]="!editForm"
+               [disabled]="viewForm"
         #typeup>
         <div>{{typeup.classList}}</div>
         <div>{{typeup.className}}</div>
@@ -64,7 +64,7 @@
                required
                name="pictureURL"
                #pictureUrl="ngModel"
-               [disabled]="!editForm">
+               [disabled]="viewForm">
                <alert type="danger" *ngIf="pictureUrl.touched && pictureUrl.invalid">Kötelező mező!</alert>
       </div>
 
@@ -77,26 +77,38 @@
                   required
                   name="description"
                   #description="ngModel"
-                  [disabled]="!editForm"
+                  [disabled]="viewForm"
                   ></textarea>
                   <alert type="danger" *ngIf="description.touched && description.invalid">Kötelező mező!</alert>
       </div>
       <div class="text-center mb-3">
-        <button type="submit"
-                class="btn btn-primary btn-lg"
-                *ngIf="editForm"
-                [disabled]="eventForm.invalid"
-                >Mentés</button>
-        <button type="button" 
-                class="btn btn-primary btn-lg"
-                *ngIf="!editForm && userService.isLoggedIn"
-                (click)="editForm = true"
-                >Szerkesztés</button>
+        <ng-container *ngIf="userService.isLoggedIn">
+          <ng-container *ngIf="viewForm; else editButtons">
+            <button type="button"
+                    class="btn btn-primary btn-lg"
+                    (click)="viewForm = false"
+            >Szerkesztés
+            </button>
+          </ng-container>
+          <ng-template #editButtons>
+            <button type="submit"
+                    class="btn btn-primary btn-lg"
+                    [disabled]="eventForm.invalid"
+            >Mentés
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-lg"
+                    (click)="delete()"
+                    *ngIf="event.id"
+            >Törlés
+            </button>
+          </ng-template>
+        </ng-container>
         <button type="button"
                 class="btn btn-primary btn-lg"
-                *ngIf="!userService.isLoggedIn"
                 (click)="navigateBack()"
-                >Vissza</button>
+        >Vissza
+        </button>
       </div>
     </form>
   </div>
