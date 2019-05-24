@@ -143,9 +143,9 @@ export class UserService {
   } 
 
   getCurrentUser() {
-    //return this._user;
+    return this._user;
     //return this._user ? this._user : new UserModel(UserModel.emptyUser);
-    return of(this._user);  
+    //return of(this._user);  
   }
 
   getAllUsers() {

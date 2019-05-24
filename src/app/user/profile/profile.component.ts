@@ -15,13 +15,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(private _userService: UserService) { }
 
   ngOnInit() {
-    //this.user = this._userService.getCurrentUser();
-    this._subs = this._userService.getCurrentUser().subscribe(user => this.user = user);  
+    this.user = this._userService.getCurrentUser();
+    //this._subs = this._userService.getCurrentUser().subscribe(user => this.user = user);  
   }
 
   ngOnDestroy() {  
     //practise 
-    this._subs.unsubscribe();  
+    //this._subs.unsubscribe();  
   }
 
 }
