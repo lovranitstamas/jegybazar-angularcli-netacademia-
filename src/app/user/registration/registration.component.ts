@@ -14,6 +14,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
-    this._userService.register();
+    //this._userService.register();
   }
 }

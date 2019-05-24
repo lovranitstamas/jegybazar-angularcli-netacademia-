@@ -30,7 +30,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const evId = this._route.snapshot.params['id'];
 
     //create an empty model while we wait for data
-    this.event = new EventModel(EventModel.emptyEvent);
+    this.event = new EventModel();
 
     //a method get true/false value in all case
     //from false to true oninit and set false from click

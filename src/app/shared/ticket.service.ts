@@ -16,13 +16,13 @@ export class TicketService {
   }
 
   getAllTickets() {
-    return this._tickets.map(ticket => {
+    /*return this._tickets.map(ticket => {
       return {
         ...ticket,
         event: this._eventService.getEventById(ticket.eventId),
         seller: this._userService.getUserById(ticket.sellerUserId)
       };
-    });
+    });*/
   }
 
   create(param: TicketModel) {

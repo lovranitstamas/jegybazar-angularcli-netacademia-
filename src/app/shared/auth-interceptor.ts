@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const userService = this._injector.get(UserService)
     if (userService.isLoggedIn && req.url.includes('firebaseio')) {
-      const reqWithIdToken = req.clone({url: `${req.url}?auth=`});
+      const reqWithIdToken = req.clone({url: `${req.url}?auth=${userService.fbIdToken}`});
       return next.handle(reqWithIdToken);
     } else {
       return next.handle(req);
