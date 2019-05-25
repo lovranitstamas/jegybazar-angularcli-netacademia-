@@ -3,7 +3,7 @@ import {EventModel} from './event-model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map,switchMap} from 'rxjs/operators';
 
 @Injectable()
 export class EventService {
@@ -94,7 +94,12 @@ export class EventService {
     if (param.id) {
       return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
     } else {
-      return this._http.post(`${environment.firebase.baseUrl}/events.json`, param);
+      return this._http.post(`${environment.firebase.baseUrl}/events.json`, param).pipe(
+        map((fbPostReturn: { name: string }) => fbPostReturn.name)).pipe( 
+        switchMap(fbId => this._http.patch( 
+          `${environment.firebase.baseUrl}/events/${fbId}.json`, 
+          {id: fbId} 
+        ))); 
     }
   }
 
