@@ -162,6 +162,15 @@ export class UserService {
     console.log('Login: ' + this.isLoggedIn);
   }
 
+  addTicket(ticketId: string): Observable<string> { 
+    return this._http.patch( 
+      `${environment.firebase.baseUrl}/users/${this._user.id}/tickets.json`, 
+      {[ticketId]: true}
+    ).pipe( 
+      map(rel => Object.keys(rel)[0])
+    ) 
+  } 
+
   private _getMockData() {
     /*return [
       new UserModel({

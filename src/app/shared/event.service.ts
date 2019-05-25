@@ -106,4 +106,13 @@ export class EventService {
   delete(param: EventModel) {
     return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
   }
+
+  addTicket(eventId: string, ticketId: string): Observable<string> { 
+    return this._http.patch( 
+      `${environment.firebase.baseUrl}/events/${eventId}/tickets.json`, 
+      {[ticketId]: true} 
+    ).pipe( 
+      map(rel => Object.keys(rel)[0])
+    );  
+  }   
 }

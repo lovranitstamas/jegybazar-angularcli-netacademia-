@@ -4,6 +4,7 @@ export class EventModel {
   date: string;
   pictureURL: string;
   description: string;
+  tickets: { [key: string]: string }; 
 
   constructor(param?: EventModel) {
 
