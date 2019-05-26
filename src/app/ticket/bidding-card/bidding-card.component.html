@@ -1,0 +1,34 @@
+<div class="card mt-2">
+  <div class="card-body">
+    <h4 class="card-title">Licit adatok</h4>
+    <table class="table table-responsive table-hover d-table">
+      <tbody>
+        <tr>
+          <th scope="row">Minimum licit:</th>
+          <td>{{ticket.minimalBidPrice}} Ft</td>
+        </tr>
+        <tr>
+          <th scope="row">Jelenlegi licit:</th>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <th scope="row">Licitek száma:</th>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <th scope="row">Licit lépcső:</th>
+          <td>{{ticket.bidStep}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">Licit lejár: x nap múlva</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col-12">
+        <a class="btn btn-primary text-light ml-lg-2" (click)="onBidWithBidStep()">Licit a lépcső szerint</a>
+      </div>  
+    </div> 
+  </div>
+</div>

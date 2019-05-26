@@ -15,6 +15,8 @@ import {UserService} from './shared/user.service';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule} from '@angular/forms';
+import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
+import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {FormsModule} from '@angular/forms';
     JumbotronComponent,
     EventcardComponent,
     FooterComponent,
-    ...AppRoutingModule.routableComponents
+    ...AppRoutingModule.routableComponents,
+    TicketDetailsCardComponent,
+    BiddingCardComponent
 
   ],
   imports: [

@@ -4,8 +4,8 @@ import {UserService} from './user.service';
 import {EventService} from './event.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
-import {switchMap,map} from 'rxjs/operators'; 
-import {Observable,of,zip,forkJoin} from 'rxjs';
+import {switchMap,map, flatMap} from 'rxjs/operators'; 
+import {Observable,of,zip,forkJoin,combineLatest} from 'rxjs';
 import {EventModel} from './event-model';
 import {UserModel} from './user-model';
 
@@ -110,7 +110,25 @@ export class TicketService {
     ).pipe(
       map(x => x.id)
     ); 
-  } 
+  }
+  
+  getOne(id:string):Observable<TicketModel>{
+    return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).pipe(
+     flatMap(
+       ticket => combineLatest(
+        of(new TicketModel(ticket)),
+        this._eventService.getEventById(ticket.eventId),
+        this._userService.getUserById(ticket.sellerUserId),
+          (t: TicketModel, e: EventModel, u: UserModel) => {
+            return {
+              ...t,
+              event: e,
+              seller: u
+            };
+          })
+       )
+     ); 
+  }
 
   private _getMockData() {
     /*return [
