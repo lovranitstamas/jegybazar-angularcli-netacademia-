@@ -18,7 +18,8 @@ import {FormsModule} from '@angular/forms';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 import { MomentModule } from 'angular2-moment';
-import 'moment/locale/hu'; 
+import 'moment/locale/hu';
+import { BiddingCardFormComponent } from './ticket/bidding-card-form/bidding-card-form.component'; 
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import 'moment/locale/hu';
     FooterComponent,
     ...AppRoutingModule.routableComponents,
     TicketDetailsCardComponent,
-    BiddingCardComponent
+    BiddingCardComponent,
+    BiddingCardFormComponent
   ],
   imports: [
     BrowserModule,
