@@ -25,6 +25,6 @@
       </tbody>
     </table>
 
-    <app-bidding-card-form [ticket]="ticket" (bidWithBidStepEventEmitter)="onBidWithBidStepBiddingCard()"></app-bidding-card-form>
+    <app-bidding-card-form *ngIf="isLoggedIn" [ticket]="ticket" (bidWithBidStepEventEmitter)="onBidWithBidStepBiddingCard()"></app-bidding-card-form>
   </div>
 </div>

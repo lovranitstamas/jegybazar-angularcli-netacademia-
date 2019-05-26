@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/shared/ticket.service';
 import { TicketModel } from 'src/app/shared/ticket-model';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
   selector: 'app-bid',
@@ -8,9 +9,13 @@ import { TicketModel } from 'src/app/shared/ticket-model';
   styleUrls: ['./bid.component.scss']
 })
 export class BidComponent implements OnInit {
-  ticket: TicketModel
+  ticket: TicketModel;
+  isLoggedIn: boolean;
 
-  constructor(private _ticketService:TicketService) { }
+  constructor(private _ticketService:TicketService,
+              userService: UserService) {
+    this.isLoggedIn = userService.isLoggedIn;            
+  }
 
   ngOnInit() {
     const id = '-Ky0HolLJBH3Q5uVHWZf';

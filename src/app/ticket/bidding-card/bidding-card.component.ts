@@ -8,7 +8,8 @@ import { TicketModel } from 'src/app/shared/ticket-model';
 })
 export class BiddingCardComponent {
   @Input() ticket: TicketModel;
-
+  @Input() isLoggedIn: Boolean;
+  
   onBidWithBidStepBiddingCard() { 
     alert('Megnyomták a gombot'); 
   } 
