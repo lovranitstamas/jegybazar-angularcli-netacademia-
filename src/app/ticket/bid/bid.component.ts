@@ -13,7 +13,7 @@ export class BidComponent implements OnInit {
   constructor(private _ticketService:TicketService) { }
 
   ngOnInit() {
-    const id = '-LfiSyB59rEvFVyj2Qph';
+    const id = '-Ky0HolLJBH3Q5uVHWZf';
     this._ticketService.getOne(id).subscribe(
       ticket => this.ticket = ticket
     );

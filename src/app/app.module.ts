@@ -17,6 +17,8 @@ import {LoggedInGuard} from './shared/logged-in.guard';
 import {FormsModule} from '@angular/forms';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
+import { MomentModule } from 'angular2-moment';
+import 'moment/locale/hu'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +30,6 @@ import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.compone
     ...AppRoutingModule.routableComponents,
     TicketDetailsCardComponent,
     BiddingCardComponent
-
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,8 @@ import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.compone
     AppRoutingModule,
     AlertModule.forRoot(),
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MomentModule
   ],
   providers: [
     EventService, 
