@@ -14,7 +14,7 @@ import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-details-card.component';
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 import { MomentModule } from 'angular2-moment';
@@ -42,7 +42,8 @@ import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.
     AlertModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    ReactiveFormsModule
   ],
   providers: [
     EventService, 
