@@ -19,7 +19,8 @@ import { TicketDetailsCardComponent } from './ticket/ticket-details-card/ticket-
 import { BiddingCardComponent } from './ticket/bidding-card/bidding-card.component';
 import { MomentModule } from 'angular2-moment';
 import 'moment/locale/hu';
-import { BiddingCardFormComponent } from './ticket/bidding-card-form/bidding-card-form.component'; 
+import { BiddingCardFormComponent } from './ticket/bidding-card-form/bidding-card-form.component';
+import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component'; 
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BiddingCardFormComponent } from './ticket/bidding-card-form/bidding-car
     ...AppRoutingModule.routableComponents,
     TicketDetailsCardComponent,
     BiddingCardComponent,
-    BiddingCardFormComponent
+    BiddingCardFormComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

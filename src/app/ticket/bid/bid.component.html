@@ -1,7 +1,7 @@
+<ng-container *ngIf="ticket!=null; else loading">
 <div class="container py-3">
 
   <div class="row justify-content-center">
-    <ng-container *ngIf="ticket">
       <div class="col-sm order-md-2">
           <app-eventcard [event]="ticket.event" nextLabel="Esemény megtekintése"></app-eventcard>
       </div>
@@ -10,7 +10,10 @@
         
         <app-bidding-card [isLoggedIn]="isLoggedIn" [ticket]="ticket"></app-bidding-card>
       </div>
-    </ng-container>
   </div>
   
 </div>
+</ng-container>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
