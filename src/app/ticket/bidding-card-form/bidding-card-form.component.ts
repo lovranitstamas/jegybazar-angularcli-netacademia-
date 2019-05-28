@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { TicketModel } from 'src/app/shared/ticket-model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-bidding-card-form',
@@ -12,6 +12,7 @@ export class BiddingCardFormComponent implements OnInit {
   @Output() bidWithBidStepEventEmitter = new EventEmitter<void>(); 
   displayBidStep = true;
   form: FormGroup;
+  submitted = false;
 
   constructor(
     private fb: FormBuilder
@@ -21,7 +22,7 @@ export class BiddingCardFormComponent implements OnInit {
     //fill up the form with group method (the parameter is an object) of the service 
     this.form = this.fb.group(
       {
-        bid: null
+        bid: [null,Validators.required]
       }
     );
   }
@@ -37,6 +38,9 @@ export class BiddingCardFormComponent implements OnInit {
   }
 
   onSubmit(){
-    alert("Licitáltak");
+    this.submitted = true;
+    //alert("Licitáltak");
+    //alert(this.form.value);
+    //alert(this.form.valid);
   }
 }

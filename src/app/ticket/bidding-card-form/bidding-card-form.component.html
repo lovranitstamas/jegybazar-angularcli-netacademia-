@@ -14,7 +14,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row mt-3">
       <div class="col-6">
-        <input formControlName="bid" type="number" class="form-control" placeholder="Add meg a licit értéket">
+        <input [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}" formControlName="bid" type="number" class="form-control" placeholder="Add meg a licit értéket">
       </div>
       <div class="col-6">
         <button type="submit" class="btn btn-primary text-light" role="button">Licitálok</button>
@@ -22,3 +22,5 @@
     </div>
   </form>
 </ng-template>
+<p>Form value: {{form.value | json}}</p>
+<p>Form bid error: {{form.get('bid').errors | json}}</p>
