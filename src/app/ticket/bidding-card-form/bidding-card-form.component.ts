@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { TicketModel } from 'src/app/shared/ticket-model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { bidMinimumValidator } from './bidding-card-form.validators';
 
 @Component({
   selector: 'app-bidding-card-form',
@@ -22,7 +23,12 @@ export class BiddingCardFormComponent implements OnInit {
     //fill up the form with group method (the parameter is an object) of the service 
     this.form = this.fb.group(
       {
-        bid: [null,Validators.required]
+        //bid: null
+        //bid: [null,Validators.required]
+        bid: [null,Validators.compose([
+          Validators.required,
+          bidMinimumValidator(this.ticket.currentBid + this.ticket.bidStep)
+        ])]
       }
     );
   }
