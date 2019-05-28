@@ -20,14 +20,30 @@ export class BidComponent implements OnInit {
     this.isLoggedIn = true;//userService.isLoggedIn;            
   }
 
-  ngOnInit() {
+  private refreshTicket(id: string){
     const handle404 = ()=>{
       this._router.navigate(['404'])
     }
 
+    this._ticketService.getOne(id).subscribe(
+      ticket => {
+        if (ticket === null){
+          handle404();
+        } else {
+          this.ticket = ticket;
+        }
+      },
+      err => {
+        return handle404();
+      }
+    );
+  }
+
+  ngOnInit() {
     this._route.paramMap.subscribe(
       (params:ParamMap) => {
-        this._ticketService.getOne(params.get('id')).subscribe(
+        this.refreshTicket(params.get('id'));
+        /*this._ticketService.getOne(params.get('id')).subscribe(
           ticket => {
             if (ticket === null){
               handle404();
@@ -38,9 +54,13 @@ export class BidComponent implements OnInit {
           err => {
             return handle404();
           }
-        );
+        );*/
       }
     );
+  }
+
+  onRefreshTicket(){
+    this.refreshTicket(this.ticket.id);
   }
 
 }

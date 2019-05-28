@@ -9,8 +9,9 @@ import { TicketModel } from 'src/app/shared/ticket-model';
 export class BiddingCardComponent {
   @Input() ticket: TicketModel;
   @Input() isLoggedIn: Boolean;
-  
+  @Output() refreshTicket = new EventEmitter<void>();
+
   onBidWithBidStepBiddingCard() { 
-    alert('Megnyomták a gombot'); 
+    this.refreshTicket.emit(); 
   } 
 }

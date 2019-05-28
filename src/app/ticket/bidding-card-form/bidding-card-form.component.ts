@@ -11,7 +11,8 @@ import { BidService } from 'src/app/shared/bid.service';
 })
 export class BiddingCardFormComponent implements OnInit {
   @Input() ticket:TicketModel;
-  @Output() bidWithBidStepEventEmitter = new EventEmitter<void>(); 
+  //@Output() bidWithBidStepEventEmitter = new EventEmitter<void>(); 
+  @Output() bid = new EventEmitter<void>(); 
   displayBidStep = true;
   form: FormGroup;
   submitted = false;
@@ -51,14 +52,26 @@ export class BiddingCardFormComponent implements OnInit {
     this.form.addControl('bid2', new FormControl());
   }
 
-  onBidWithBidStepClickEvent() { 
-    this.bidWithBidStepEventEmitter.emit(); 
-  }
-  
   displayBidWithStep($event: Event){
     $event.preventDefault();
 
     this.displayBidStep = false;
+  }  
+
+  onBidWithBidStepClickEvent() { 
+    //this.bidWithBidStepEventEmitter.emit(); 
+    this.toBid(this.ticket.currentBid + this.ticket.bidStep)
+    .subscribe(
+      () => {
+
+        this.submitSuccessAlert = true;
+        this.bid.emit();
+      },
+      err => {
+        console.error(err);
+        this.submitErrorAlert = true;
+      }
+    )
   }
 
   onSubmit(){
@@ -67,13 +80,14 @@ export class BiddingCardFormComponent implements OnInit {
     this.submitErrorAlert = false;
 
     if(this.form.valid){
-      this._bidService.bid(this.ticket.id,this.form.value['bid'])
+      //this._bidService.bid(this.ticket.id,this.form.value['bid'])
+      this.toBid(this.form.value['bid'])
         .subscribe(
           () => {
             this.submitted = false;
             this.form.reset({bid: null});
             this.submitSuccessAlert = true;
-            //TODO emit output bid
+            this.bid.emit();
           },
           err => {
             console.error(err);
@@ -85,5 +99,9 @@ export class BiddingCardFormComponent implements OnInit {
     //alert("Licitáltak");
     //alert(this.form.value);
     //alert(this.form.valid);
+  }
+
+  toBid(value: number){
+    return this._bidService.bid(this.ticket.id, value)
   }
 }
