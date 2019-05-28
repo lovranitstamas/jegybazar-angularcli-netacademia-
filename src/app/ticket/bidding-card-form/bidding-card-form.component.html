@@ -12,6 +12,13 @@
   </div>  
 </div>  
 <ng-template #bidWithValue>
+  <alert type="success" dismissOnTimeout="5000" *ngIf="submitSuccessAlert">
+    Sikeres licit
+  </alert>
+  <alert type="danger" *ngIf="submitErrorAlert">
+    Hiba! Kérem próbálja meg újra vagy értesítsen minket at xy@gmail.com-en.
+  </alert>
+  
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!--<input type="text" *ngIf="form.get('bid2')" formControlName="bid2">-->
     <div class="row mt-3">
