@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { TicketModel } from 'src/app/shared/ticket-model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { bidMinimumValidator } from './bidding-card-form.validators';
 
 @Component({
@@ -31,6 +31,20 @@ export class BiddingCardFormComponent implements OnInit {
         ])]
       }
     );
+
+    /*this.form.get('bid').valueChanges.subscribe(
+      val => console.log('Bid change: ', val)
+    );*/
+    //Bid change: 2
+
+    /*this.form.valueChanges.subscribe(
+      val => console.log('Form change => ', val)
+    );*/
+    //Form change => {bid: 2}
+  }
+
+  testMethod(){
+    this.form.addControl('bid2', new FormControl());
   }
 
   onBidWithBidStepClickEvent() { 
