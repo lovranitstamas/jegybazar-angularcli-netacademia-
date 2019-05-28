@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { TicketModel } from 'src/app/shared/ticket-model';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { bidMinimumValidator } from './bidding-card-form.validators';
+import { BidService } from 'src/app/shared/bid.service';
 
 @Component({
   selector: 'app-bidding-card-form',
@@ -16,7 +17,8 @@ export class BiddingCardFormComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _bidService: BidService
   ){  }
 
   ngOnInit(): void{
@@ -59,6 +61,22 @@ export class BiddingCardFormComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
+
+    if(this.form.valid){
+      this._bidService.bid(this.ticket.id,this.form.value['bid'])
+        .subscribe(
+          () => {
+            this.submitted = false;
+            this.form.reset({bid: null});
+            //TODO notification user
+            //TODO emit output bid
+          },
+          err => {
+            console.error(err);
+          }
+        )
+    }
+
     //alert("Licitáltak");
     //alert(this.form.value);
     //alert(this.form.valid);

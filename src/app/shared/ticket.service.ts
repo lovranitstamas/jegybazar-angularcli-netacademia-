@@ -130,6 +130,11 @@ export class TicketService {
      ); 
   }
 
+  modify(ticket: TicketModel){
+    return this._http
+      .put(`${environment.firebase.baseUrl}/tickets/${ticket.id}.json`,ticket);
+  }
+
   private _getMockData() {
     /*return [
       new TicketModel({
