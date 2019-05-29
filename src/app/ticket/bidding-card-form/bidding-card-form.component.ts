@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit, SimpleChanges } from '@angular/core';
 import { TicketModel } from '../../shared/ticket-model';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { bidMinimumValidator } from './bidding-card-form.validators';
@@ -24,6 +24,17 @@ export class BiddingCardFormComponent implements OnInit {
     private fb: FormBuilder,
     private _bidService: BidService
   ){  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ticket'] != null 
+        && !changes['ticket'].isFirstChange()
+        && changes['ticket'].currentValue != null)
+        {
+        this.form.reset({bid: null});
+        this.disabled = false;
+        this.form.get('bid').enable();
+    }
+  }
 
   //bidMinimumValidator(this.ticket.currentBid + this.ticket.bidStep)
   ngOnInit(): void{
@@ -67,8 +78,6 @@ export class BiddingCardFormComponent implements OnInit {
       () => {
         this.submitSuccessAlert = true;
         this.bid.emit();
-        this.form.get('bid').enable();
-        this.disabled = false;
       },
       err => {
         console.error(err);
@@ -86,11 +95,8 @@ export class BiddingCardFormComponent implements OnInit {
         .subscribe(
           () => {
             this.submitted = false;
-            this.form.reset({bid: null});
             this.submitSuccessAlert = true;
-            this.bid.emit();
-            this.form.get('bid').enable();
-            this.disabled = false;
+            this.bid.emit();            
           },
           err => {
             console.error(err);
@@ -107,7 +113,7 @@ export class BiddingCardFormComponent implements OnInit {
   toBid(value: number){
     this.submitSuccessAlert = false;
     this.submitErrorAlert = false;
-    
+
     this.form.get('bid').disable();
     this.disabled = true;
 
