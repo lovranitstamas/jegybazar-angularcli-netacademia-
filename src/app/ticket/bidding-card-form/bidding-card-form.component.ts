@@ -18,6 +18,7 @@ export class BiddingCardFormComponent implements OnInit {
   submitted = false;
   submitSuccessAlert = false;
   submitErrorAlert = false;
+  disabled = false;
 
   constructor(
     private fb: FormBuilder,
@@ -64,9 +65,10 @@ export class BiddingCardFormComponent implements OnInit {
     this.toBid(this.ticket.currentBid + this.ticket.bidStep)
     .subscribe(
       () => {
-
         this.submitSuccessAlert = true;
         this.bid.emit();
+        this.form.get('bid').enable();
+        this.disabled = false;
       },
       err => {
         console.error(err);
@@ -89,6 +91,8 @@ export class BiddingCardFormComponent implements OnInit {
             this.form.reset({bid: null});
             this.submitSuccessAlert = true;
             this.bid.emit();
+            this.form.get('bid').enable();
+            this.disabled = false;
           },
           err => {
             console.error(err);
@@ -103,6 +107,9 @@ export class BiddingCardFormComponent implements OnInit {
   }
 
   toBid(value: number){
+    this.form.get('bid').disable();
+    this.disabled = true;
+
     return this._bidService.bid(this.ticket.id, value)
   }
 }

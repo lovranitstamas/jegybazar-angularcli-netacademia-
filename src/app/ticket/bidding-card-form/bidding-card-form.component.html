@@ -7,12 +7,12 @@
 <!--<button (click)="testMethod()">Teszt</button>-->
 <div class="row" *ngIf="displayBidStep; else bidWithValue">
   <div class="col-12">
-    <a class="btn btn-primary text-light" (click)="onBidWithBidStepClickEvent()">
+    <button class="btn btn-primary text-light" (click)="onBidWithBidStepClickEvent()" [disabled]="disabled">
       Licit a következő legkisebb licittel: {{ticket.currentBid + ticket.bidStep}} Ft
-    </a>
+    </button>
   </div>
   <div class="col-12 mt-3">
-    <a href="#" (click)="displayBidWithStep($event)">
+    <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">
       Inkább megadom én a licit értékét
     </a>
   </div>  
@@ -23,16 +23,21 @@
     <!--<input type="text" *ngIf="form.get('bid2')" formControlName="bid2">-->
     <div class="row mt-3">
       <div class="col-6">
-        <input [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}" formControlName="bid" type="number" class="form-control" placeholder="Add meg a licit értéket">
+        <input [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}" 
+              formControlName="bid" 
+              type="number" 
+              class="form-control" 
+              placeholder="Add meg a licit értéket"
+              >
         <div class="invalid-feedback mt-2 font-weight-bold" *ngIf="form.get('bid').hasError('required')">
           <h6>Kérem töltse ki a mezőt!</h6>
         </div>
         <div class="invalid-feedback mt-2 font-weight-bold" *ngIf="form.get('bid').hasError('validateMinimumBid')">
-          <h6>A minimum érték nem megfelelő. Leagalább {{ticket.currentBid + ticket.bidStep}} Ft megadása kötelező! </h6>
+          <h6>A minimum érték nem megfelelő. Legalább {{ticket.currentBid + ticket.bidStep}} Ft megadása kötelező! </h6>
         </div>
       </div>
       <div class="col-6">
-        <button type="submit" class="btn btn-primary text-light" role="button">Licitálok</button>
+        <button type="submit" class="btn btn-primary text-light" role="button" [disabled]="disabled">Licitálok</button>
       </div>
     </div>
   </form>
