@@ -79,8 +79,6 @@ export class BiddingCardFormComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
-    this.submitSuccessAlert = false;
-    this.submitErrorAlert = false;
 
     if(this.form.valid){
       //this._bidService.bid(this.ticket.id,this.form.value['bid'])
@@ -107,6 +105,9 @@ export class BiddingCardFormComponent implements OnInit {
   }
 
   toBid(value: number){
+    this.submitSuccessAlert = false;
+    this.submitErrorAlert = false;
+    
     this.form.get('bid').disable();
     this.disabled = true;
 
