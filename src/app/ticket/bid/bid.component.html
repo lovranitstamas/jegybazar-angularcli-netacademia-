@@ -6,9 +6,9 @@
           <app-eventcard [event]="ticket.event" nextLabel="Esemény megtekintése"></app-eventcard>
       </div>
       <div class="col-sm-12 col-md-8">
-        <app-ticket-details-card [ticket]="ticket"></app-ticket-details-card>
+        <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
         
-        <app-bidding-card [isLoggedIn]="isLoggedIn" [ticket]="ticket" (refreshTicket)="onRefreshTicket()"></app-bidding-card>
+        <app-bidding-card [isLoggedIn]="isLoggedIn"  [loading]="progressRefreshTicket" [ticket]="ticket" (refreshTicket)="onRefreshTicket()"></app-bidding-card>
       </div>
   </div>
   
