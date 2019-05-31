@@ -8,7 +8,12 @@ export const environment = {
     baseUrl: 'https://jegybazar-angular.firebaseio.com', 
     registrationUrl: 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser', 
     loginUrl: 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword', 
-    apikey: 'AIzaSyDAScJirfNPoV6i2ZZHwGDUmRO9JSFFKqA' 
+    apiKey: '',
+    authDomain: '', 
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '' 
   } 
 };
 

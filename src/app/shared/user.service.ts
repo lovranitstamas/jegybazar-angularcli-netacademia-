@@ -41,7 +41,7 @@ export class UserService {
   
   /*login(email: string, password: string): Observable<UserModel> {
     return this._http.post<FirebaseLoginModel>(
-      `${environment.firebase.loginUrl}?key=${environment.firebase.apikey}`,
+      `${environment.firebase.loginUrl}?key=${environment.firebase.apiKey}`,
       {
         'email': email,
         'password': password,
@@ -58,7 +58,7 @@ export class UserService {
    
   login(email: string, password: string): Observable<UserModel> {   
     return this._http.post<FirebaseLoginModel>(  
-      `${environment.firebase.loginUrl}?key=${environment.firebase.apikey}`,  
+      `${environment.firebase.loginUrl}?key=${environment.firebase.apiKey}`,  
       {  
         'email': email,  
         'password': password,  
@@ -104,7 +104,7 @@ export class UserService {
 
   register(param: UserModel, password: string) {
     return this._http.post<FirebaseRegistrationModel>(
-      `${environment.firebase.registrationUrl}?key=${environment.firebase.apikey}`,
+      `${environment.firebase.registrationUrl}?key=${environment.firebase.apiKey}`,
       {
         'email': param.email,
         'password': password,
