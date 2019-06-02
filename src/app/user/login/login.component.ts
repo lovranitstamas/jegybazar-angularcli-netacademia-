@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   
   login(email: string, password: string) {
     this._userService.login(email, password).subscribe(
-      (user: UserModel) => {
+      (user) => {
         //console.log('login cmp', user);
         this._router.navigate(['/user']);
       },

@@ -23,10 +23,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() { 
-    this.user = this._userService.isLoggedIn ? this._userService.getCurrentUser() : new UserModel();
-    /*this._userService.getCurrentUser().pipe(
+    //this.user = this._userService.isLoggedIn ? this._userService.getCurrentUser() : new UserModel();
+    this._userService.getCurrentUser().pipe(
       takeUntil(this._destroy$))
-      .subscribe(user => (this.user = user));*/
+      .subscribe(user => (this.user = user));
   }
 
   ngOnDestroy() {

@@ -10,40 +10,41 @@
         </div>
       </div>
 
-      <div class="row justify-content-center bg-light m-0">
-        <img alt="Card image cap" class="profil my-3 border" [src]="user.profilePictureUrl">
-      </div>
-      <div class="card-body">
-        <table class="table">
-          <tbody>
-          <tr>
-            <th scope="row">Név:</th>
-            <td>{{user.name}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Email-cím:</th>
-            <td>{{user.email}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Lakcím:</th>
-            <td>{{user.address}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Születési idő /év/hónap/nap:</th>
-            <td>{{user.dateOfBirth}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Nem:</th>
-            <td>{{user.gender}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      <ng-container *ngIf="(user$ | async) as user">
+        <div class="row justify-content-center bg-light m-0">
+          <img alt="Card image cap" class="profil my-3 border" [src]="user.profilePictureUrl">
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <tbody>
+            <tr>
+              <th scope="row">Név:</th>
+              <td>{{user.name}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Email-cím:</th>
+              <td>{{user.email}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Lakcím:</th>
+              <td>{{user.address}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Születési idő /év/hónap/nap:</th>
+              <td>{{user.dateOfBirth}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Nem:</th>
+              <td>{{user.gender}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div class="text-center mb-3">
-        <a class="btn btn-primary text-light ml-lg-2" routerLink="./edit">Profil módosítása</a>
-      </div>
-      
+        <div class="text-center mb-3">
+          <a class="btn btn-primary text-light ml-lg-2" routerLink="./edit">Profil módosítása</a>
+        </div>
+      </ng-container>
 
     </div>
   </div>

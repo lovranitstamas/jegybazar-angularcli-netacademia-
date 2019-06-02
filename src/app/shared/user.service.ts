@@ -6,25 +6,49 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
 import {FirebaseLoginModel} from './firebase-login-model';
 import {FirebaseRegistrationModel} from './firebase-registration-model'; 
-import {switchMap,tap,map} from 'rxjs/operators'; 
+import {switchMap,tap,map, flatMap} from 'rxjs/operators'; 
+import {ReplaySubject} from 'rxjs'; 
+import * as firebase from 'firebase'; 
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn = false;
-  private _user: UserModel;
-  private _fbAuthData: FirebaseLoginModel | FirebaseRegistrationModel | undefined; 
+  isLoggedIn$ = new ReplaySubject<boolean>(1); 
+
+  private _user = new ReplaySubject<UserModel>(1);
+  //private _fbAuthData: FirebaseLoginModel | FirebaseRegistrationModel | undefined; 
   //private _allUsers: UserModel[];
+  private _fbAuthData: any; 
 
   constructor(private _router: Router,
               private _http: HttpClient) {
     //this._allUsers = this._getMockData();
+    firebase.auth().onAuthStateChanged( 
+      (user) => { 
+        if (user != null) {
+          this._fbAuthData = user; 
+          this.getUserById(user.uid).subscribe(remoteUser => {
+            //console.log(remoteUser);
+            this._user.next(remoteUser);
+          });
+          this.isLoggedIn$.next(true); 
+        } else { 
+          this._fbAuthData = null;
+          this._user.next(null); 
+          this.isLoggedIn$.next(false); 
+        } 
+      } 
+    ); 
+
+    //subject - both part can send
+    //in login no next, only subscriber, can not send
   }
 
-  get fbIdToken(): string | null {  
+  /*get fbIdToken(): string | null {  
     return this._fbAuthData ? this._fbAuthData.idToken : null;  
-  } 
+  }*/
 
  /* login(email: string, password: string): boolean {
     if (email === 'angular' && password === 'angular') {
@@ -56,7 +80,7 @@ export class UserService {
       );
   }*/
    
-  login(email: string, password: string): Observable<UserModel> {   
+  /*login(email: string, password: string): Observable<UserModel> {   
     return this._http.post<FirebaseLoginModel>(  
       `${environment.firebase.loginUrl}?key=${environment.firebase.apiKey}`,  
       {  
@@ -68,12 +92,18 @@ export class UserService {
         switchMap(fbLogin => this.getUserById(fbLogin.localId) 
           .pipe( 
             tap(user => this._user = user), 
-            tap(user => this.isLoggedIn = true), 
+            // tap(user => this.isLoggedIn = true), 
             tap(user => console.log('sikeres login ezzel a userrel: ', user)) 
           ) 
         ) 
       ) 
-  }  
+  }*/
+  
+  login(email: string, password: string) { 
+    return from(
+      firebase.auth().signInWithEmailAndPassword(email,password)
+    );
+  }
 
   /*register(param?: UserModel) {
     if (param) {
@@ -119,7 +149,7 @@ export class UserService {
           }),
           switchMap(user => this.save(user)
             .pipe(
-              tap(user => this.isLoggedIn = true),
+              // tap(user => this.isLoggedIn = true),
               tap(user => console.log('sikeres reg ezzel a userrel: ', user))
             )     
           )
@@ -128,9 +158,9 @@ export class UserService {
 
   save(param: UserModel) {
     return this._http.put<UserModel>(`${environment.firebase.baseUrl}/users/${param.id}.json`, param)
-      .pipe(
-        tap(user => this._user = user)
-      );
+      /*.pipe(
+        tap(user => this._user.next(user))
+      );*/
   }
 
   /*getUserById(id: number) {
@@ -143,7 +173,7 @@ export class UserService {
   } 
 
   getCurrentUser() {
-    return this._user;
+    return this._user.asObservable();
     //return this._user ? this._user : new UserModel(UserModel.emptyUser);
     //return of(this._user);  
   }
@@ -154,21 +184,29 @@ export class UserService {
     );
   }
 
-  logout() {
+  /*logout() {
     this._user = new UserModel();
-    this.isLoggedIn = false;
+    // this.isLoggedIn = false;
     delete(this._fbAuthData);
     this._router.navigate(['/home']);
-    console.log('Login: ' + this.isLoggedIn);
+    //console.log('Login: ' + this.isLoggedIn);
+  }*/
+  logout(){
+    firebase.auth().signOut();
+    this._router.navigate(['/home']);
   }
 
-  addTicket(ticketId: string): Observable<string> { 
-    return this._http.patch( 
-      `${environment.firebase.baseUrl}/users/${this._user.id}/tickets.json`, 
-      {[ticketId]: true}
-    ).pipe( 
-      map(rel => Object.keys(rel)[0])
-    ) 
+  addTicket(ticketId: string): Observable<string> {
+    return this._user.pipe(
+      flatMap(user => {
+        return this._http.patch( 
+          `${environment.firebase.baseUrl}/users/${user.id}/tickets.json`, 
+          {[ticketId]: true}
+        ).pipe( 
+          map(rel => Object.keys(rel)[0])
+        )
+      })
+    ); 
   } 
 
   private _getMockData() {

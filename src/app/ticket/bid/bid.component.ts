@@ -3,6 +3,7 @@ import { TicketService } from 'src/app/shared/ticket.service';
 import { TicketModel } from 'src/app/shared/ticket-model';
 import { UserService } from 'src/app/shared/user.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-bid',
@@ -11,14 +12,13 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 })
 export class BidComponent implements OnInit {
   ticket: TicketModel;
-  isLoggedIn: boolean;
+  isLoggedIn$: Observable<boolean>;
   progressRefreshTicket = false;
 
   constructor(private _ticketService:TicketService,
-              userService: UserService,
+              public userService: UserService,
               private _route: ActivatedRoute,
-              private _router: Router) {
-    this.isLoggedIn = true;//userService.isLoggedIn;            
+              private _router: Router) {     
   }
 
   private refreshTicket(id: string){

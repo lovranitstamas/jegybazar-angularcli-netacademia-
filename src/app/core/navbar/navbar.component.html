@@ -17,7 +17,7 @@
         <a class="nav-item nav-link" routerLink="/event" routerLinkActive="active">Események</a>
         <a class="nav-item nav-link" routerLink="/ticket" routerLinkActive="active">Jegyek</a>
         <a class="nav-item nav-link" routerLink="/about" routerLinkActive="active">Rólunk</a>
-        <ng-container *ngIf="!userService.isLoggedIn; else loggedInBlock">
+        <ng-container *ngIf="!(userService.isLoggedIn$ | async); else loggedInBlock">
           <a class="nav-item nav-link" routerLink="/user/login" routerLinkActive="active">Belépés</a>
           <a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm"
              routerLink="/user/registration">Regisztráció</a>

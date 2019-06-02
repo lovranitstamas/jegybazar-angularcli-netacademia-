@@ -1,5 +1,4 @@
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'; 
-import {AuthInterceptor} from './shared/auth-interceptor'; 
+import {HttpClientModule} from '@angular/common/http'; 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -53,7 +52,6 @@ import {environment} from '../environments/environment';
     UserService, 
     TicketService, 
     LoggedInGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     BidService 
   ],
   bootstrap: [AppComponent]
