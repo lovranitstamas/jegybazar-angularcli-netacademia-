@@ -47,18 +47,6 @@ export class BidComponent implements OnInit {
     this._route.paramMap.subscribe(
       (params:ParamMap) => {
         this.refreshTicket(params.get('id'));
-        /*this._ticketService.getOne(params.get('id')).subscribe(
-          ticket => {
-            if (ticket === null){
-              handle404();
-            } else {
-              this.ticket = ticket;
-            }
-          },
-          err => {
-            return handle404();
-          }
-        );*/
       }
     );
   }

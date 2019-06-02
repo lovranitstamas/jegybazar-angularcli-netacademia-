@@ -14,23 +14,11 @@ import {UserModel} from './user-model';
 })
 export class TicketService {
 
-  private _tickets: TicketModel[];
-
   constructor(private _eventService: EventService,
-              private  _userService: UserService,
+              private _userService: UserService,
               private _http: HttpClient) {
-    //this._tickets = this._getMockData();
   }
 
-  /*getAllTickets() {
-    return this._tickets.map(ticket => {
-      return {
-        ...ticket,
-        event: this._eventService.getEventById(ticket.eventId),
-        seller: this._userService.getUserById(ticket.sellerUserId)
-      };
-    });
-  }*/
   getAllTickets() {
     // 1.) query all ticket in object via http get. We get objects
     // {key1: ticketObject1, key2: TicketObject2, key3: ticketObject3, ...} 
@@ -60,30 +48,6 @@ export class TicketService {
         switchMap(zipStreamArray => forkJoin(zipStreamArray))
       );
   }
-
-  /*create(param: TicketModel) {
-    this._tickets = [
-      ...this._tickets,
-      new TicketModel({
-        id: this._tickets.reduce((x, y) => x.id > y.id ? x : y).id + 1,
-        ...param,
-        event: this._eventService.getEventById(param.eventId),
-        seller: this._userService.getUserById(param.sellerUserId)
-      })
-      /*{
-        id: this._tickets.reduce((x, y) => x.id > y.id ? x : y).id + 1,
-        ...param
-      }*/
-    /*];
-  }*/
-  /*create(param: TicketModel) {
-    return this._http.post(`${environment.firebase.baseUrl}/tickets.json`, param).pipe(
-    switchMap((fbPostReturn: { name: string }) => this._http.patch( 
-      `${environment.firebase.baseUrl}/tickets/${fbPostReturn.name}.json`, 
-      {id: fbPostReturn.name} 
-    ))); 
-  }*/
-
 
   create(param: TicketModel) {
     return this._http
@@ -133,65 +97,6 @@ export class TicketService {
   modify(ticket: TicketModel){
     return this._http
       .put(`${environment.firebase.baseUrl}/tickets/${ticket.id}.json`,ticket);
-  }
-
-  private _getMockData() {
-    /*return [
-      new TicketModel({
-        id: 1,
-        date: '2018-05-02',
-        numberOfTickets: 5,
-        minimalBidPrice: 2000,
-        bidStep: 500,
-        eventId: 4,
-        sellerUserId: 1
-      }),
-      new TicketModel({
-        id: 2,
-        date: '2018-10-12',
-        numberOfTickets: 4,
-        minimalBidPrice: 4000,
-        bidStep: 1000,
-        eventId: 1,
-        sellerUserId: 2
-      }),
-      new TicketModel({
-        id: 3,
-        date: '2018-10-02',
-        numberOfTickets: 7,
-        minimalBidPrice: 5000,
-        bidStep: 2000,
-        eventId: 2,
-        sellerUserId: 3
-      }),
-      new TicketModel({
-        id: 4,
-        date: '2019-06-04',
-        numberOfTickets: 5,
-        minimalBidPrice: 10000,
-        bidStep: 1000,
-        eventId: 5,
-        sellerUserId: 2
-      }),
-      new TicketModel({
-        id: 5,
-        date: '2018-11-06',
-        numberOfTickets: 2,
-        minimalBidPrice: 20000,
-        bidStep: 2000,
-        eventId: 7,
-        sellerUserId: 2
-      }),
-      new TicketModel({
-        id: 6,
-        date: '2019-11-06',
-        numberOfTickets: 1,
-        minimalBidPrice: 15000,
-        bidStep: 1500,
-        eventId: 9,
-        sellerUserId: 3
-      })
-    ];*/
   }
 
 }

@@ -37,16 +37,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  /*onSubmit() { 
-    //this._userService.updateUser(this.user); 
-    if (this.user.id) { 
-      this._userService.updateUser(this.user); 
-    } else { 
-      this._userService.register(this.user);  
-    } 
-    this._router.navigate(['/user']); 
-  } */
-
   createUser(pass: string) { 
     this._userService.register(this.user, pass)
     .pipe(

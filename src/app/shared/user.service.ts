@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserModel} from './user-model';
-import {Observable,of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
-import {FirebaseLoginModel} from './firebase-login-model';
 import {FirebaseRegistrationModel} from './firebase-registration-model'; 
 import {switchMap,tap,map, flatMap} from 'rxjs/operators'; 
 import {ReplaySubject} from 'rxjs'; 
@@ -18,13 +17,10 @@ export class UserService {
   isLoggedIn$ = new ReplaySubject<boolean>(1); 
 
   private _user = new ReplaySubject<UserModel>(1);
-  //private _fbAuthData: FirebaseLoginModel | FirebaseRegistrationModel | undefined; 
-  //private _allUsers: UserModel[];
   private _fbAuthData: any; 
 
   constructor(private _router: Router,
               private _http: HttpClient) {
-    //this._allUsers = this._getMockData();
     firebase.auth().onAuthStateChanged( 
       (user) => { 
         if (user != null) {
@@ -45,92 +41,12 @@ export class UserService {
     //subject - both part can send
     //in login no next, only subscriber, can not send
   }
-
-  /*get fbIdToken(): string | null {  
-    return this._fbAuthData ? this._fbAuthData.idToken : null;  
-  }*/
-
- /* login(email: string, password: string): boolean {
-    if (email === 'angular' && password === 'angular') {
-      //this._user = new UserModel(UserModel.exampleUser);
-      this._user = this._allUsers[0];
-      this.isLoggedIn = true;
-      //this._router.navigate(['/user']);
-      return true;
-    }
-
-    console.log('Login: ' + this.isLoggedIn);
-    return false;
-  }*/
-  
-  /*login(email: string, password: string): Observable<UserModel> {
-    return this._http.post<FirebaseLoginModel>(
-      `${environment.firebase.loginUrl}?key=${environment.firebase.apiKey}`,
-      {
-        'email': email,
-        'password': password,
-        'returnSecureToken': true
-      }).pipe(
-        switchMap(fbLogin => this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbLogin.localId}.json`)
-          .pipe(
-            tap(user => this.isLoggedIn = true), 
-            tap(user => this._user = user) 
-          )
-        )
-      );
-  }*/
-   
-  /*login(email: string, password: string): Observable<UserModel> {   
-    return this._http.post<FirebaseLoginModel>(  
-      `${environment.firebase.loginUrl}?key=${environment.firebase.apiKey}`,  
-      {  
-        'email': email,  
-        'password': password,  
-        'returnSecureToken': true  
-      }).pipe(  
-        tap((fbAuthResponse: FirebaseLoginModel) => this._fbAuthData = fbAuthResponse), 
-        switchMap(fbLogin => this.getUserById(fbLogin.localId) 
-          .pipe( 
-            tap(user => this._user = user), 
-            // tap(user => this.isLoggedIn = true), 
-            tap(user => console.log('sikeres login ezzel a userrel: ', user)) 
-          ) 
-        ) 
-      ) 
-  }*/
   
   login(email: string, password: string) { 
     return from(
       firebase.auth().signInWithEmailAndPassword(email,password)
     );
   }
-
-  /*register(param?: UserModel) {
-    if (param) {
-      this._user = new UserModel({
-        id: 4,
-        ...param
-      });
-
-      this._allUsers = [
-        ...this._allUsers,
-        this._user
-      ];
-    }
-    if (param) {
-      this._user = new UserModel(param);
-    } else {
-      this._user = new UserModel(UserModel.exampleUser);
-    }
-    this.isLoggedIn = true;
-    console.log('Login: ' + this.isLoggedIn);
-    //this._router.navigate(['/user']);
-  }*/
-
-  /*
-  updateUser(param: UserModel) {
-    this._user = new UserModel(param);
-  }*/
 
   register(param: UserModel, password: string) {
     return this._http.post<FirebaseRegistrationModel>(
@@ -149,7 +65,6 @@ export class UserService {
           }),
           switchMap(user => this.save(user)
             .pipe(
-              // tap(user => this.isLoggedIn = true),
               tap(user => console.log('sikeres reg ezzel a userrel: ', user))
             )     
           )
@@ -158,15 +73,7 @@ export class UserService {
 
   save(param: UserModel) {
     return this._http.put<UserModel>(`${environment.firebase.baseUrl}/users/${param.id}.json`, param)
-      /*.pipe(
-        tap(user => this._user.next(user))
-      );*/
   }
-
-  /*getUserById(id: number) {
-    const user = this._allUsers.filter(u => u.id === +id);
-    return user.length > 0 ? user[0] : new UserModel(UserModel.emptyUser);
-  }*/
 
   getUserById(fbid: string) { 
     return this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbid}.json`); 
@@ -174,8 +81,6 @@ export class UserService {
 
   getCurrentUser() {
     return this._user.asObservable();
-    //return this._user ? this._user : new UserModel(UserModel.emptyUser);
-    //return of(this._user);  
   }
 
   getAllUsers() {
@@ -184,13 +89,6 @@ export class UserService {
     );
   }
 
-  /*logout() {
-    this._user = new UserModel();
-    // this.isLoggedIn = false;
-    delete(this._fbAuthData);
-    this._router.navigate(['/home']);
-    //console.log('Login: ' + this.isLoggedIn);
-  }*/
   logout(){
     firebase.auth().signOut();
     this._router.navigate(['/home']);

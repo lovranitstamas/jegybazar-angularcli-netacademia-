@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./ticket-list.component.scss']
 })
 export class TicketListComponent implements OnInit {
-  //public tickets: TicketModel[];
   tickets$: Observable<TicketModel[]>; 
 
   constructor(private _ticketService: TicketService,
@@ -18,7 +17,6 @@ export class TicketListComponent implements OnInit {
               ) { }
 
   ngOnInit() {
-    //this.tickets = this._ticketService.getAllTickets();
     this.tickets$ = this._ticketService.getAllTickets(); 
   }
 

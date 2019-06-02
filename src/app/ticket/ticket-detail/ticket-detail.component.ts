@@ -26,8 +26,6 @@ export class TicketDetailComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     this.ticket = new TicketModel();
-    //this.ticket.sellerUserId = this._userService.getCurrentUser().id;
-    //this.events = this._eventService.getAllEvents();
     
     // not beautiful
     this.ticket.eventId = '';
@@ -41,11 +39,6 @@ export class TicketDetailComponent implements OnInit,OnDestroy {
     this._subs.unsubscribe();
   }
 
-  
-  /*onSubmit() {
-    this._ticketService.create(this.ticket);
-    this._router.navigate(['/ticket']);
-  }*/
   onSubmit() {
     //console.log(this.ticket);
     this._subs = this._ticketService.create(this.ticket)

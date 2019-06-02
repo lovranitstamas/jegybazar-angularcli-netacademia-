@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <ng-container *ngIf="(user$ | async) as user">
+      <ng-container *ngIf="(user$ | async) as user; else loading">
         <div class="row justify-content-center bg-light m-0">
           <img alt="Card image cap" class="profil my-3 border" [src]="user.profilePictureUrl">
         </div>
@@ -45,6 +45,9 @@
           <a class="btn btn-primary text-light ml-lg-2" routerLink="./edit">Profil módosítása</a>
         </div>
       </ng-container>
+      <ng-template #loading>
+        <app-loading-spinner></app-loading-spinner>
+      </ng-template>
 
     </div>
   </div>

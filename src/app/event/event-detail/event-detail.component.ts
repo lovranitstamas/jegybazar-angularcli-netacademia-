@@ -18,7 +18,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   //close all subscription
   private _destroy$ = new Subject<void>();
-  //private _destroy$: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute, 
               private _eventService: EventService, 

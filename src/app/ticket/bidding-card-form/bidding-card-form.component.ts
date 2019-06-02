@@ -11,7 +11,6 @@ import { BidService } from '../../shared/bid.service';
 })
 export class BiddingCardFormComponent implements OnInit {
   @Input() ticket:TicketModel;
-  //@Output() bidWithBidStepEventEmitter = new EventEmitter<void>(); 
   @Output() bid = new EventEmitter<void>(); 
   displayBidStep = true;
   form: FormGroup;
@@ -72,7 +71,6 @@ export class BiddingCardFormComponent implements OnInit {
   }  
 
   onBidWithBidStepClickEvent() { 
-    //this.bidWithBidStepEventEmitter.emit(); 
     this.toBid(this.ticket.currentBid + this.ticket.bidStep)
     .subscribe(
       () => {
@@ -90,7 +88,6 @@ export class BiddingCardFormComponent implements OnInit {
     this.submitted = true;
 
     if(this.form.valid){
-      //this._bidService.bid(this.ticket.id,this.form.value['bid'])
       this.toBid(this.form.value['bid'])
         .subscribe(
           () => {
