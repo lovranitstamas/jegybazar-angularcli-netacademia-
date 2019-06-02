@@ -25,7 +25,7 @@
   <thead>
   <tr>
     <th class="text-center">Esemény neve</th>
-    <th class="text-center d-none d-md-table-cell">Időpont</th>
+    <th class="text-center d-none d-md-table-cell">Licit lejárta</th>
     <th class="text-center">Előadó neve</th>
     <th class="text-center">Hány db?</th>
     <th class="text-center">Licitek megtekintése</th>
@@ -39,7 +39,7 @@
         {{ ticket.event.name }}
       </a>
     </td>
-    <td class="d-none d-md-table-cell">{{ ticket.date }}</td>
+    <td class="d-none d-md-table-cell">{{ ticket.bidEndDate | amFromUnix  | amDateFormat:'LLL' }}</td>
     <td>{{ ticket.seller.name }}</td>
     <td>{{ ticket.numberOfTickets }}</td>
     <td><a [routerLink]="['/ticket', ticket.id]">Tovább a licithez</a></td>

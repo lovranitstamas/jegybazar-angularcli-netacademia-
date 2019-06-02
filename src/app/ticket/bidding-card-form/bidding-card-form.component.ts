@@ -71,7 +71,7 @@ export class BiddingCardFormComponent implements OnInit {
   }  
 
   onBidWithBidStepClickEvent() { 
-    this.toBid(this.ticket.currentBid + this.ticket.bidStep)
+    this.toBid(+this.ticket.currentBid + +this.ticket.bidStep)
     .subscribe(
       () => {
         this.submitSuccessAlert = true;
