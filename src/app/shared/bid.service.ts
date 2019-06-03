@@ -21,7 +21,7 @@ export class BidService {
       .pipe(
         flatMap(
           () => {
-            return this._ticketService.getOne(ticketId);
+            return this._ticketService.getOneOnce(ticketId);
           }
         ),
         flatMap(

@@ -4,7 +4,7 @@ import {UserService} from './user.service';
 import {EventService} from './event.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
-import {switchMap,map, flatMap} from 'rxjs/operators'; 
+import {switchMap,map, flatMap, first} from 'rxjs/operators'; 
 import {Observable,of,zip,forkJoin,combineLatest} from 'rxjs';
 import {EventModel} from './event-model';
 import {UserModel} from './user-model';
@@ -76,6 +76,11 @@ export class TicketService {
       map(x => x.id)
     ); 
   }
+
+   
+  getOneOnce(id: string): Observable<TicketModel> { 
+    return this.getOne(id).pipe(first()); 
+  } 
   
   getOne(id:string):Observable<TicketModel>{
     /*return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).pipe(
