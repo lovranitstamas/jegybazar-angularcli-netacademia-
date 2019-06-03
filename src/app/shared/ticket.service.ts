@@ -8,6 +8,7 @@ import {switchMap,map, flatMap} from 'rxjs/operators';
 import {Observable,of,zip,forkJoin,combineLatest} from 'rxjs';
 import {EventModel} from './event-model';
 import {UserModel} from './user-model';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +78,7 @@ export class TicketService {
   }
   
   getOne(id:string):Observable<TicketModel>{
-    return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).pipe(
+    /*return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).pipe(
      flatMap(
        ticket => combineLatest(
         of(new TicketModel(ticket)),
@@ -85,14 +86,41 @@ export class TicketService {
         this._userService.getUserById(ticket.sellerUserId),
           (t: TicketModel, e: EventModel, u: UserModel) => {
             return t.setEvent(e).setSeller(u); 
-            /*return {
+            return {
               ...t,
               event: e,
               seller: u
-            };*/
+            };
           })
        )
-     ); 
+    );*/
+     
+    return new Observable(
+       observer => {
+         const dbTicket = firebase.database().ref(`tickets/${id}`);
+         dbTicket.on('value', snapshot => {
+           const ticket = snapshot.val();
+           const subscription = combineLatest(
+            of(new TicketModel(ticket)),
+            this._eventService.getEventById(ticket.eventId),
+            this._userService.getUserById(ticket.sellerUserId),
+              (t: TicketModel, e: EventModel, u: UserModel) => {
+                return t.setEvent(e).setSeller(u); 
+                /*return {
+                  ...t,
+                  event: e,
+                  seller: u
+                };*/
+              }).subscribe(
+                ticketModel => {
+                  observer.next(ticketModel);
+                  subscription.unsubscribe();
+                }
+              )
+          });
+        }
+    ) 
+      
   }
 
   modify(ticket: TicketModel){
