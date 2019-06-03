@@ -4,6 +4,7 @@ import { TicketModel } from 'src/app/shared/ticket-model';
 import { UserService } from 'src/app/shared/user.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {Observable} from 'rxjs';
+import {share} from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-bid',
@@ -11,7 +12,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./bid.component.scss']
 })
 export class BidComponent implements OnInit {
-  ticket: TicketModel;
+  ticket$: Observable<TicketModel>;
   isLoggedIn$: Observable<boolean>;
   progressRefreshTicket = false;
 
@@ -28,14 +29,15 @@ export class BidComponent implements OnInit {
       this._router.navigate(['404'])
     }
 
-    this._ticketService.getOne(id).subscribe(
+    this.ticket$ = this._ticketService.getOne(id).pipe(share());
+    this.ticket$.subscribe(
       ticket => {
         this.progressRefreshTicket = false;
         if (ticket === null){
           handle404();
-        } else {
+        } /*else {
           this.ticket = ticket;
-        }
+        } */
       },
       err => {
         return handle404();
@@ -51,8 +53,9 @@ export class BidComponent implements OnInit {
     );
   }
 
+  /*
   onRefreshTicket(){
     this.refreshTicket(this.ticket.id);
-  }
+  }*/
 
 }

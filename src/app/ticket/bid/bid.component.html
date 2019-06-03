@@ -1,4 +1,4 @@
-<ng-container *ngIf="ticket!=null; else loading">
+<ng-container *ngIf="(ticket$ | async) as ticket; else loading">
 <div class="container py-3">
 
   <div class="row justify-content-center">
@@ -8,7 +8,8 @@
       <div class="col-sm-12 col-md-8">
         <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
         
-        <app-bidding-card [isLoggedIn]="userService.isLoggedIn$ | async"  [loading]="progressRefreshTicket" [ticket]="ticket" (refreshTicket)="onRefreshTicket()"></app-bidding-card>
+        <app-bidding-card [isLoggedIn]="userService.isLoggedIn$ | async"  [loading]="progressRefreshTicket" [ticket]="ticket"></app-bidding-card>
+        <!-- (refreshTicket)="onRefreshTicket()"-->
       </div>
   </div>
   
