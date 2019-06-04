@@ -35,15 +35,20 @@ export class TicketService {
       //Ky0HolLJBH3Q5uVHWZf
       map(ticketsArray => ticketsArray.map(tm =>
         zip(
-          of(tm),
+          //of(tm),
+          of(new TicketModel(tm)),
           this._eventService.getEventById(tm.eventId),
           this._userService.getUserById(tm.sellerUserId),
           (t: TicketModel, e: EventModel, u: UserModel) => {
-            return {
+            /*return {
               ...t,
               event: e,
               seller: u
-            };
+            };*/
+            //return t.setEvent(e).setSeller(u); 
+            t.setEvent(e);
+            t.setSeller(u);
+            return t;
           })
       ))).pipe(
         switchMap(zipStreamArray => forkJoin(zipStreamArray))
