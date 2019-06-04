@@ -8,7 +8,7 @@
       <div class="col-sm-12 col-md-8">
         <app-ticket-details-card [ticket]="ticket" [loading]="progressRefreshTicket"></app-ticket-details-card>
         
-        <app-bidding-card [isLoggedIn]="userService.isLoggedIn$ | async"  [loading]="progressRefreshTicket" [ticket]="ticket"></app-bidding-card>
+        <app-bidding-card [isLoggedIn]="userService.isLoggedIn$ | async"  (bid)="onBid()" [ticket]="ticket"></app-bidding-card>
         <!-- (refreshTicket)="onRefreshTicket()"-->
       </div>
   </div>
