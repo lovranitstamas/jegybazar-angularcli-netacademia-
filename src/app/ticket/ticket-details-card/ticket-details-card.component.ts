@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { TicketModel } from 'src/app/shared/ticket-model';
 
 @Component({
@@ -6,7 +6,39 @@ import { TicketModel } from 'src/app/shared/ticket-model';
   templateUrl: './ticket-details-card.component.html',
   styleUrls: ['./ticket-details-card.component.scss']
 })
-export class TicketDetailsCardComponent{
+export class TicketDetailsCardComponent implements AfterViewInit, OnChanges{
   @Input() ticket: TicketModel;
   @Input() loading = false;
+
+  constructor(private cdr:ChangeDetectorRef){
+  }
+
+  ngAfterViewInit(){
+    this.cdr.detach();
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes['loading'] != null
+       && !changes['loading'].isFirstChange()
+       && changes['loading'].currentValue != changes['loading'].previousValue){
+         this.cdr.detectChanges();
+       } else if (changes['ticket'] != null
+       && !changes['ticket'].isFirstChange()){
+         const prev:TicketModel = changes['ticket'].previousValue;
+         const current: TicketModel = changes['ticket'].currentValue;
+
+         if (prev == null || current == null){
+          this.cdr.detectChanges();
+         } else if (prev.seller.name != current.seller.name){
+          this.cdr.detectChanges();
+         } else if (prev.numberOfTickets != current.numberOfTickets){
+          this.cdr.detectChanges();
+         } else if (prev.bidEndDate != current.bidEndDate){
+          this.cdr.detectChanges();
+         } else if (prev.details != current.details){
+          this.cdr.detectChanges();
+         } 
+
+       }
+  }
 }
