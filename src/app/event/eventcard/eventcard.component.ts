@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, AfterViewInit, ChangeDetectorRef, SimpleChanges} from '@angular/core';
 import {EventModel} from '../../shared/event-model';
 
 @Component({
@@ -6,16 +6,40 @@ import {EventModel} from '../../shared/event-model';
   templateUrl: './eventcard.component.html',
   styleUrls: ['./eventcard.component.scss']
 })
-export class EventcardComponent implements OnInit {
+export class EventcardComponent implements AfterViewInit{
   @Input() event: EventModel;
   @Input() nextLabel = 'Tovább';
 
-  constructor() {
-
+  constructor(private cdr:ChangeDetectorRef){
   }
 
-  ngOnInit() {
+  ngAfterViewInit(){
+    this.cdr.detach();
+  }
 
+  ngOnChanges(changes: SimpleChanges){
+    if(changes['nextLabel'] != null
+       && !changes['nextLabel'].isFirstChange()
+        ){
+         this.cdr.detectChanges();
+       } else if (changes['event'] != null
+       && !changes['event'].isFirstChange()){
+         const prev: EventModel = changes['event'].previousValue;
+         const current: EventModel = changes['event'].currentValue;
+
+         if (prev == null || current == null){
+          this.cdr.detectChanges();
+         } else if (prev.name != current.name){
+          this.cdr.detectChanges();
+         } else if (prev.date != current.date){
+          this.cdr.detectChanges();
+         } else if (prev.pictureURL != current.pictureURL){
+          this.cdr.detectChanges();
+         } else if (prev.description != current.description){
+          this.cdr.detectChanges();
+         } 
+
+       }
   }
 
 }
