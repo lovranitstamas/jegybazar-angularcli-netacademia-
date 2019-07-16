@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  DoCheck, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-jumbotron',
   templateUrl: './jumbotron.component.html',
-  styleUrls: ['./jumbotron.component.scss']
+  styleUrls: ['./jumbotron.component.scss'],
+
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JumbotronComponent implements OnInit {
+export class JumbotronComponent implements DoCheck, AfterViewChecked {
 
-  constructor() { }
+  ngDoCheck(): void {
+    console.log('JumbotronComponent ngDoCheck');
+  }
 
-  ngOnInit() {
+  ngAfterViewChecked(): void {
+    console.log('JumbotronComponent ngAfterViewChecked');
   }
 
 }
