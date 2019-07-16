@@ -7,14 +7,14 @@ import { Component,  DoCheck, AfterViewChecked, ChangeDetectionStrategy } from '
 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JumbotronComponent implements DoCheck, AfterViewChecked {
+export class JumbotronComponent /*implements DoCheck, AfterViewChecked*/ {
 
-  ngDoCheck(): void {
+  /*ngDoCheck(): void {
     console.log('JumbotronComponent ngDoCheck');
   }
 
   ngAfterViewChecked(): void {
     console.log('JumbotronComponent ngAfterViewChecked');
-  }
+  }*/
 
 }

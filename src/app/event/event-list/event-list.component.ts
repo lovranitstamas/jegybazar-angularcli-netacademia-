@@ -1,9 +1,10 @@
-import {Component, OnInit,  ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit,  ChangeDetectionStrategy, ElementRef, ViewChild} from '@angular/core';
 import {EventService} from '../../shared/event.service';
 import {EventModel} from '../../shared/event-model';
 import {UserService} from '../../shared/user.service';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators'
+import {map, delay, distinctUntilChanged, flatMap} from 'rxjs/operators';
+import {BehaviorSubject, fromEvent} from 'rxjs';
 
 @Component({
   selector: 'app-event-list',
@@ -16,9 +17,34 @@ export class EventListComponent implements OnInit {
   public eventsGrouppedBy3: EventModel[];
   public events$:Observable<EventModel[]>;
   public eventsGrouppedBy3$:Observable<EventModel[][]>;
+  @ViewChild('searchInput') searchInput: ElementRef;
+  private filteredText$ = new BehaviorSubject<string>(null);
 
   constructor(private _eventService: EventService,
               public userService: UserService) {
+  }
+
+  
+  ngAfterViewInit(): void {
+    var input = document.querySelector("#search-input");
+    //console.log(this.searchInput);
+    //this.searchInput.nativeElement
+    fromEvent(input, 'keyup').pipe(
+      delay(300),
+      map(
+        (event: Event) => {
+          return (event.srcElement as HTMLInputElement).value;
+        }
+      ),
+      distinctUntilChanged())
+      .subscribe(
+        text => {
+          if (text.length === 0) {
+            text = null;
+          }
+          this.filteredText$.next(text);
+        }
+      );
   }
 
   ngOnInit() {
@@ -44,6 +70,25 @@ export class EventListComponent implements OnInit {
       }, [])
     });*/
     this.eventsGrouppedBy3$ = this._eventService.getAllEvents().pipe(
+      flatMap(
+        events => {
+          return this.filteredText$.pipe(
+            map(
+              filterText => {
+                if (filterText === null) {
+                  return events;
+                } else {
+                  return events.filter(
+                    event => {
+                      return event.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1;
+                    }
+                  );
+                }
+              }
+            )
+          );
+        }
+      ),
       map(data => {
           return data.reduce((acc: Array<any>, curr: EventModel, ind: number) => {
             if (ind % 3 === 0) {
