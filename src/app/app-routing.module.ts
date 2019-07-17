@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
-import {EventComponent} from './event/event.component';
-import {EventListComponent} from './event/event-list/event-list.component';
-import {EventDetailComponent} from './event/event-detail/event-detail.component';
+//import {EventComponent} from './event/event.component';
+//import {EventListComponent} from './event/event-list/event-list.component';
+//import {EventDetailComponent} from './event/event-detail/event-detail.component';
 import {TicketComponent} from './ticket/ticket.component';
 import {TicketListComponent} from './ticket/ticket-list/ticket-list.component';
 import {TicketDetailComponent} from './ticket/ticket-detail/ticket-detail.component';
@@ -18,13 +18,14 @@ import {LoggedInGuard} from './shared/logged-in.guard';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {
+  /*{
     path: 'event', component: EventComponent, children: [
       {path: '', component: EventListComponent},
       {path: 'new', component: EventDetailComponent, canActivate: [LoggedInGuard]},
       {path: ':id', component: EventDetailComponent}
     ]
-  },
+  },*/
+  { path: "", loadChildren: "./event/event.module#EventModule" },
   {
     path: 'ticket', component: TicketComponent,
     children: [
@@ -56,9 +57,9 @@ const routes: Routes = [
 export class AppRoutingModule {
   static routableComponents = [
     HomeComponent,
-    EventComponent,
-    EventListComponent,
-    EventDetailComponent,
+    //EventComponent,
+    //EventListComponent,
+    //EventDetailComponent,
     TicketComponent,
     TicketListComponent,
     TicketDetailComponent,

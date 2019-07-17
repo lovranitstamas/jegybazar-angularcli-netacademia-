@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {AlertModule, CollapseModule} from 'ngx-bootstrap';
 import {NavbarComponent} from './core/navbar/navbar.component';
 import {JumbotronComponent} from './core/jumbotron/jumbotron.component';
-import {EventcardComponent} from './event/eventcard/eventcard.component';
+//import {EventcardComponent} from './event/eventcard/eventcard.component';
 import {FooterComponent} from './core/footer/footer.component';
 import {AppRoutingModule} from './app-routing.module';
 import {EventService} from './shared/event.service';
@@ -24,13 +24,14 @@ import { BidService } from './shared/bid.service';
 import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
 import { NavBarItemComponent } from './core/nav-bar-item/nav-bar-item.component';
+import { EventcardModule } from './event/eventcard/eventcard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     JumbotronComponent,
-    EventcardComponent,
+    //EventcardComponent,
     FooterComponent,
     ...AppRoutingModule.routableComponents,
     TicketDetailsCardComponent,
@@ -47,7 +48,8 @@ import { NavBarItemComponent } from './core/nav-bar-item/nav-bar-item.component'
     FormsModule,
     HttpClientModule,
     MomentModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EventcardModule
   ],
   providers: [
     EventService, 
