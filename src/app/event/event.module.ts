@@ -8,6 +8,7 @@ import {AlertModule} from 'ngx-bootstrap';
 
 import { EventRoutingModule } from './event-routing.module';
 import { EventcardModule } from './eventcard/eventcard.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EventcardModule } from './eventcard/eventcard.module';
     EventRoutingModule,
     FormsModule,
     AlertModule,
-    EventcardModule
+    EventcardModule,
+    CoreModule
   ]
 })
 export class EventModule { }
