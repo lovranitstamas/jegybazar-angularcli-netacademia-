@@ -8,7 +8,7 @@ import {TicketComponent} from './ticket/ticket.component';
 import {TicketListComponent} from './ticket/ticket-list/ticket-list.component';
 import {TicketDetailComponent} from './ticket/ticket-detail/ticket-detail.component';
 import {BidComponent} from './ticket/bid/bid.component';
-import {AboutComponent} from './about/about.component';
+//import {AboutComponent} from './about/about.component';
 import {LoginComponent} from './user/login/login.component';
 //import {RegistrationComponent} from './user/registration/registration.component';
 import {ProfileComponent} from './user/profile/profile.component';
@@ -34,7 +34,7 @@ const routes: Routes = [
       {path: ':id', component: BidComponent/*, canActivate: [LoggedInGuard]*/}
     ]
   },
-  {path: 'about', component: AboutComponent},
+  { path: "", loadChildren: "./about/about.module#AboutModule" },
   {
     path: 'user',
     children: [
@@ -64,7 +64,7 @@ export class AppRoutingModule {
     TicketListComponent,
     TicketDetailComponent,
     BidComponent,
-    AboutComponent,
+    //AboutComponent,
     LoginComponent,
     //RegistrationComponent,
     ProfileComponent,
