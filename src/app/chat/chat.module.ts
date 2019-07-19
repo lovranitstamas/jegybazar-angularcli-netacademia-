@@ -4,6 +4,7 @@ import { ChatService } from './chat.service';
 import { MockedChatService } from './mocked-chat.service';
 import { UserService } from '../shared/user.service';
 import { environment } from '../../environments/environment';
+import { ChatWindowComponent } from './chat-window/chat-window.component';
 
 export const chatServiceProvidefactoryFn =
   (userService: UserService) => {
@@ -13,9 +14,12 @@ export const chatServiceProvidefactoryFn =
   }
 
 @NgModule({
-  declarations: [],
+  declarations: [ChatWindowComponent],
   imports: [
     CommonModule
+  ],
+  exports: [
+    ChatWindowComponent
   ]
 })
 export class ChatModule { 
@@ -30,6 +34,6 @@ export class ChatModule {
           deps: [UserService]
         }
       ]
-    }    
+    };    
   }
 }

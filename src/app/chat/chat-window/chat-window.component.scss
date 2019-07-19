@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  max-height: 350px;
+
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000;
+}
+
+:host > .card {
+  height: 100%;
+}
