@@ -1,6 +1,7 @@
 import {HttpClientModule} from '@angular/common/http'; 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {NgZone} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {AlertModule, CollapseModule} from 'ngx-bootstrap';
@@ -26,6 +27,7 @@ import {environment} from '../environments/environment';
 //import { NavBarItemComponent } from './core/nav-bar-item/nav-bar-item.component';
 import { EventcardModule } from './event/eventcard/eventcard.module';
 import { CoreModule } from './core/core.module';
+import { ChatModule } from './chat/chat.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { CoreModule } from './core/core.module';
     MomentModule,
     ReactiveFormsModule,
     EventcardModule,
-    CoreModule
+    CoreModule,
+    ChatModule.forRoot()
   ],
   providers: [
     EventService, 
@@ -63,7 +66,13 @@ import { CoreModule } from './core/core.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(){
+  /*constructor(){
     firebase.initializeApp(environment.firebase);
-  }
+  }*/
+  
+    constructor(ngZone: NgZone) {
+    ngZone.runOutsideAngular(() =>
+      firebase.initializeApp(environment.firebase)
+      )
+    }
 }
