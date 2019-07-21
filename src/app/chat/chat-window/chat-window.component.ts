@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged, skip } from 'rxjs/operators'; 
+import { environment } from 'src/environments/environment';
+import { MockedChatDatas } from '../mocked-chat.service';
+import { Observable } from 'rxjs';
+import { ChatMessageModel } from '../model/chat.model';
+import { ChatService } from '../chat.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -11,12 +16,17 @@ export class ChatWindowComponent implements OnInit {
   form: FormGroup;
   invalidChatMessageInput = false;
   @ViewChild('chatMessageInput') chatMessageInput: ElementRef;
+  @Input() roomId = environment.production ? null : MockedChatDatas.mockedRoomId;
+  chatMessages$: Observable<ChatMessageModel[]>;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _chatService: ChatService
   ) { }
 
   ngOnInit() {
+    this.chatMessages$ = this._chatService.getRoomMessages(this.roomId);
+
     this.form = this.fb.group({
       'chat-message': [null, Validators.required]
     });
@@ -43,7 +53,16 @@ export class ChatWindowComponent implements OnInit {
     if (this.form.invalid){
       this.invalidChatMessageInput = true;
     } else {
-      console.log(this.form.value);
+      this._chatService.addMessage(this.roomId,this.form.value['chat-message'])
+        .subscribe(
+          resp => {
+            if (resp){
+              this.form.reset({'chat-message': null});
+            } else {
+              alert('Hiba a chat üzenet küldése közben');
+            }
+          }
+        );
     }
 
     this.chatMessageInput.nativeElement.focus();

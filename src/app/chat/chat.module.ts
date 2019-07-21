@@ -6,6 +6,7 @@ import { UserService } from '../shared/user.service';
 import { environment } from '../../environments/environment';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '../core/core.module';
 
 export const chatServiceProvidefactoryFn =
   (userService: UserService) => {
@@ -18,7 +19,8 @@ export const chatServiceProvidefactoryFn =
   declarations: [ChatWindowComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
   ],
   exports: [
     ChatWindowComponent

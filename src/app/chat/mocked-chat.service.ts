@@ -5,6 +5,13 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ChatMessageModel } from './model/chat.model';
 import { switchMap, delay } from 'rxjs/operators'; 
 
+export const MockedChatDatas = {
+  mockedRoomId: '-Ky0HolLJBH3Q5uVHWZf',
+  mockedUserId: 'pmhs4PEZp6VyW9sfg6gPPPPyRaa2',
+  mockedUsername: 'Lovranits Tamás',
+  mockedPictureUrl: 'https://pbs.twimg.com/profile_images/831993825635745796/HnVmB0-k_400x400.jpg' 
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +20,23 @@ export class MockedChatService extends ChatService {
   //private messages$ = new BehaviorSubject<ChatMessageModel[]>([]);
 
   constructor(userService: UserService){
-    super(userService)
+    super(userService);
+
+    //fill mocked messages
+    const mockedMessages = [];
+    for (let i=0; i<10; i++){
+      mockedMessages.push({
+          $id: null,
+          msg: `Test messsage: ${i}`,
+          userId: MockedChatDatas.mockedUserId,
+          userName: MockedChatDatas.mockedUsername,
+          userPictureUrl: MockedChatDatas.mockedPictureUrl
+        });
+    }
+
+    const currentRooms = this.rooms$.getValue();
+    currentRooms[MockedChatDatas.mockedRoomId] = new BehaviorSubject<ChatMessageModel[]>(mockedMessages);
+    this.rooms$.next(currentRooms);
   }
 
   addMessage(roomId: string, msg: string):Observable<boolean>{
