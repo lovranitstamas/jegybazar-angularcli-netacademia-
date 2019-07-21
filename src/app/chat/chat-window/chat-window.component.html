@@ -6,24 +6,8 @@
     <ng-container *ngIf="chatMessages$ | async as chatMessages; else loadingChat">
       <ng-container *ngIf="chatMessages.length; else notFoundMessage">
         <ul class="chat-messages-list">
-          <li class="left clearfix" *ngFor="let msg of chatMessages">
-              <span class="float-left">
-                <img *ngIf="msg.userPictureUrl; else placeholderImage" [src]="msg.userPictureUrl" alt="Felhasználó képe" class="user-image rounded-circle">
-                <ng-template #placeholderImage>
-                  <img src="assets/chat_user_placeholder.png" alt="Felhasználó képe" class="user-image rounded-circle placeholder-image">
-                </ng-template>
-              </span>
-              <div class="clearfix chat-message">
-                <div class="chat-message-header">
-                  <strong>{{ msg.userName }}</strong>
-                  <small class="float-right text-muted">X idővel ezelőtt</small>
-                </div>
-                <p>
-                  {{ msg.msg }}
-                </p>
-              </div>
-            </li>
-          </ul>  
+          <app-chat-message-row [msg]="msg" *ngFor="let msg of chatMessages"></app-chat-message-row>
+        </ul>  
       </ng-container>
       <ng-template>
         <strong>Nincs még üzenet</strong>

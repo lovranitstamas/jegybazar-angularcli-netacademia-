@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
+import { ChatMessageRowComponent } from './chat-message-row/chat-message-row.component';
 
 export const chatServiceProvidefactoryFn =
   (userService: UserService) => {
@@ -16,7 +17,7 @@ export const chatServiceProvidefactoryFn =
   }
 
 @NgModule({
-  declarations: [ChatWindowComponent],
+  declarations: [ChatWindowComponent, ChatMessageRowComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
