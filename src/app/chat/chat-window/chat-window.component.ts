@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MockedChatDatas } from '../mocked-chat.service';
 import { Observable } from 'rxjs';
@@ -10,10 +10,12 @@ import { ChatService } from '../chat.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss']
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent implements OnInit, AfterViewChecked {
   @Input() roomId = environment.production ? null : MockedChatDatas.mockedRoomId;
   chatMessages$: Observable<ChatMessageModel[]>;
   resetForm = false;
+  @ViewChild('cardBody') cardBody: ElementRef;
+  private shouldScrolling = false;
 
   constructor(
     private _chatService: ChatService
@@ -21,6 +23,14 @@ export class ChatWindowComponent implements OnInit {
 
   ngOnInit() {
     this.chatMessages$ = this._chatService.getRoomMessages(this.roomId);
+    this.shouldScrolling = true; //or the default state is true
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.shouldScrolling){
+      this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+      this.shouldScrolling = false;
+    }
   }
 
   onNewMessage(newMessage: string){
@@ -29,6 +39,7 @@ export class ChatWindowComponent implements OnInit {
           resp => {
             if (resp){
               this.resetForm = true;
+              this.shouldScrolling = true;
             } else {
               alert('Hiba a chat üzenet küldése közben');
             }
