@@ -1,0 +1,9 @@
+<form class="input-group"  [formGroup]="form" (ngSubmit)="sendMessage()">
+  <input type="text" name="chat-message" formControlName="chat-message"
+          class="form-control" placeholder="Üzenet..."
+          [ngClass]="{'is-invalid':invalidChatMessageInput}"
+          #chatMessageInput>
+  <span class="input-form-group">
+    <button class="btn btn-primary" type="submit">Küldés</button>
+  </span>
+</form>

@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { distinctUntilChanged, skip } from 'rxjs/operators'; 
+import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MockedChatDatas } from '../mocked-chat.service';
 import { Observable } from 'rxjs';
@@ -13,59 +11,29 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-window.component.scss']
 })
 export class ChatWindowComponent implements OnInit {
-  form: FormGroup;
-  invalidChatMessageInput = false;
-  @ViewChild('chatMessageInput') chatMessageInput: ElementRef;
   @Input() roomId = environment.production ? null : MockedChatDatas.mockedRoomId;
   chatMessages$: Observable<ChatMessageModel[]>;
+  resetForm = false;
 
   constructor(
-    private fb: FormBuilder,
     private _chatService: ChatService
   ) { }
 
   ngOnInit() {
     this.chatMessages$ = this._chatService.getRoomMessages(this.roomId);
-
-    this.form = this.fb.group({
-      'chat-message': [null, Validators.required]
-    });
-
-    this.form.get('chat-message')
-      .valueChanges
-      .pipe(
-        distinctUntilChanged(
-          msg => {
-            // van adat -> true && false -> false -> i
-            //nincs     -> false && false -> false -> i
-            return !(msg.length > 0 && this.invalidChatMessageInput)
-          }
-        ),
-        skip(1)
-      )
-      .subscribe(
-        //msg => console.log(msg)
-        () => this.invalidChatMessageInput = false
-      );    
   }
 
-  sendMessage(){
-    if (this.form.invalid){
-      this.invalidChatMessageInput = true;
-    } else {
-      this._chatService.addMessage(this.roomId,this.form.value['chat-message'])
+  onNewMessage(newMessage: string){
+    this._chatService.addMessage(this.roomId,newMessage)
         .subscribe(
           resp => {
             if (resp){
-              this.form.reset({'chat-message': null});
+              this.resetForm = true;
             } else {
               alert('Hiba a chat üzenet küldése közben');
             }
           }
-        );
-    }
-
-    this.chatMessageInput.nativeElement.focus();
+      );
   }
 
 }
