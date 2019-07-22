@@ -14,6 +14,7 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
   @Output() newMessage = new EventEmitter<string>();
   @Input() reset = false;
   @Output() resetChange = new EventEmitter<boolean>();  
+  private _disabled = false;
 
   constructor(private fb: FormBuilder) { }
 
@@ -47,8 +48,22 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
       && changes['reset'].currentValue === true){
         this.form.reset({'chat-message': null});
         this.chatMessageInput.nativeElement.focus();
+        this.disabled = false;
       }
 
+  }
+
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = value;
+    if (value === true){
+      this.form.get('chat-message').disable();
+    } else {
+      this.form.get('chat-message').enable();
+    }
   }
 
   sendMessage(){
@@ -56,6 +71,7 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
       this.invalidChatMessageInput = true;
       this.chatMessageInput.nativeElement.focus();
     } else {
+      this.disabled = true;
       this.resetChange.emit(false);
       this.newMessage.emit(this.form.value['chat-message']);
     }
