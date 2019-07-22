@@ -1,7 +1,7 @@
 <ng-container *ngIf="(ticket$ | async) as ticket; else loading">
-<div class="container py-3">
+  <div class="container py-3">
 
-  <div class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-sm order-md-2">
           <app-eventcard [event]="ticket.event" nextLabel="Esemény megtekintése"></app-eventcard>
       </div>
@@ -11,9 +11,10 @@
         <app-bidding-card [isLoggedIn]="userService.isLoggedIn$ | async"  (bid)="onBid()" [ticket]="ticket"></app-bidding-card>
         <!-- (refreshTicket)="onRefreshTicket()"-->
       </div>
-  </div>
+    </div>
   
-</div>
+  </div>
+  <app-chat-window *ngIf="userService.isLoggedIn$ | async"></app-chat-window>
 </ng-container>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
