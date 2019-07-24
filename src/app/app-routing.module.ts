@@ -25,7 +25,7 @@ const routes: Routes = [
       {path: ':id', component: EventDetailComponent}
     ]
   },*/
-  { path: "", loadChildren: "./event/event.module#EventModule" },
+  { path: "event", loadChildren: "./event/event.module#EventModule" },
   {
     path: 'ticket', component: TicketComponent,
     children: [
@@ -34,7 +34,7 @@ const routes: Routes = [
       {path: ':id', component: BidComponent/*, canActivate: [LoggedInGuard]*/}
     ]
   },
-  { path: "", loadChildren: "./about/about.module#AboutModule" },
+  { path: "about", loadChildren: "./about/about.module#AboutModule" },
   {
     path: 'user',
     children: [

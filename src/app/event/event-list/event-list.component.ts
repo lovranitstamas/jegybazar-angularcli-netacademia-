@@ -1,5 +1,6 @@
 import {Component, OnInit,  ChangeDetectionStrategy, ElementRef, ViewChild} from '@angular/core';
-import {EventService} from '../../shared/event.service';
+//import {EventService} from '../../shared/event.service';
+import {EventService} from '../event.service';
 import {EventModel} from '../../shared/event-model';
 import {UserService} from '../../shared/user.service';
 import {Observable} from 'rxjs';

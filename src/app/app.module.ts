@@ -1,7 +1,7 @@
 import {HttpClientModule} from '@angular/common/http'; 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {NgZone} from '@angular/core';
+import {NgZone} from '@angular/core'; 
 
 import {AppComponent} from './app.component';
 import {AlertModule, CollapseModule} from 'ngx-bootstrap';
@@ -10,7 +10,7 @@ import {AlertModule, CollapseModule} from 'ngx-bootstrap';
 //import {EventcardComponent} from './event/eventcard/eventcard.component';
 //import {FooterComponent} from './core/footer/footer.component';
 import {AppRoutingModule} from './app-routing.module';
-import {EventService} from './shared/event.service';
+//import {EventService} from './shared/event.service';
 import {UserService} from './shared/user.service';
 import {TicketService} from './shared/ticket.service';
 import {LoggedInGuard} from './shared/logged-in.guard';
@@ -28,6 +28,7 @@ import {environment} from '../environments/environment';
 import { EventcardModule } from './event/eventcard/eventcard.module';
 import { CoreModule } from './core/core.module';
 import { ChatModule } from './chat/chat.module';
+import { EventModule } from './event/event.module';
 
 @NgModule({
   declarations: [
@@ -54,10 +55,11 @@ import { ChatModule } from './chat/chat.module';
     ReactiveFormsModule,
     EventcardModule,
     CoreModule,
-    ChatModule.forRoot()
+    ChatModule.forRoot(),
+    EventModule.forRoot()
   ],
   providers: [
-    EventService, 
+    //EventService, 
     UserService, 
     TicketService, 
     LoggedInGuard,

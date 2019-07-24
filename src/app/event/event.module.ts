@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EventComponent} from './event.component';
 import {EventListComponent} from './event-list/event-list.component';
@@ -9,6 +9,7 @@ import {AlertModule} from 'ngx-bootstrap';
 import { EventRoutingModule } from './event-routing.module';
 import { EventcardModule } from './eventcard/eventcard.module';
 import { CoreModule } from '../core/core.module';
+import { EventService } from './event.service';
 
 @NgModule({
   declarations: [
@@ -25,4 +26,12 @@ import { CoreModule } from '../core/core.module';
     CoreModule
   ]
 })
-export class EventModule { }
+
+export class EventModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: EventModule,
+      providers: [EventService]
+    };
+  }
+}

@@ -1,5 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {EventService} from '../../shared/event.service';
+//import {EventService} from '../../shared/event.service';
+import {EventService} from '../event.service';
 import {EventModel} from '../../shared/event-model';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
