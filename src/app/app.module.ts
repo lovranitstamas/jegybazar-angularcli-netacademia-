@@ -29,6 +29,8 @@ import { EventcardModule } from './event/eventcard/eventcard.module';
 import { CoreModule } from './core/core.module';
 import { ChatModule } from './chat/chat.module';
 import { EventModule } from './event/event.module';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -55,8 +57,11 @@ import { EventModule } from './event/event.module';
     ReactiveFormsModule,
     EventcardModule,
     CoreModule,
-    ChatModule.forRoot(),
-    EventModule.forRoot()
+    //ChatModule.forRoot(),
+    ChatModule,
+    EventModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [
     //EventService, 

@@ -9,10 +9,11 @@ import { ChatService } from '../chat.service';
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ChatService]
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked {
-  @Input() roomId = environment.production ? null : MockedChatDatas.mockedRoomId;
+  @Input() roomId;// = environment.production ? null : MockedChatDatas.mockedRoomId;
   chatMessages$: Observable<ChatMessageModel[]>;
   resetForm = false;
   @ViewChild('cardBody') cardBody: ElementRef;

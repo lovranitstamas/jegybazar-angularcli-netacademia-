@@ -31,7 +31,7 @@ export const chatServiceProvidefactoryFn =
   ]
 })
 export class ChatModule { 
-  static forRoot():ModuleWithProviders {
+  /*static forRoot():ModuleWithProviders {
     return {
       ngModule : ChatModule,
       //[{provide: ChatService, useValue: ChatService}]
@@ -43,5 +43,5 @@ export class ChatModule {
         }
       ]
     };    
-  }
+  }*/
 }
