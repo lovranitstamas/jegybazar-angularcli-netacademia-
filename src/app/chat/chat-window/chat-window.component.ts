@@ -10,7 +10,7 @@ import { ChatService } from '../chat.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  //providers: [ChatService]
+  providers: [ChatService]
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked,AfterViewInit {
   @Input() roomId;// environment.production ? null : MockedChatDatas.mockedRoomId;
@@ -30,13 +30,15 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked,AfterViewIn
 
   ngAfterViewInit(): void {
     window.setTimeout(() => {
-        this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+        //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+        document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
     },500);    
   }
 
   ngAfterViewChecked(): void {
     if (this.shouldScrolling){     
-        this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+        //this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+        document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
         this.shouldScrolling = false;      
     }
   }
