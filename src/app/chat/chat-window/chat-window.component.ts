@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MockedChatDatas } from '../mocked-chat.service';
 import { Observable } from 'rxjs';
@@ -10,10 +10,10 @@ import { ChatService } from '../chat.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ChatService]
+  //providers: [ChatService]
 })
-export class ChatWindowComponent implements OnInit, AfterViewChecked {
-  @Input() roomId;// = environment.production ? null : MockedChatDatas.mockedRoomId;
+export class ChatWindowComponent implements OnInit, AfterViewChecked,AfterViewInit {
+  @Input() roomId;// environment.production ? null : MockedChatDatas.mockedRoomId;
   chatMessages$: Observable<ChatMessageModel[]>;
   resetForm = false;
   @ViewChild('cardBody') cardBody: ElementRef;
@@ -28,10 +28,16 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     this.shouldScrolling = true; //or the default state is true
   }
 
+  ngAfterViewInit(): void {
+    window.setTimeout(() => {
+        this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+    },500);    
+  }
+
   ngAfterViewChecked(): void {
-    if (this.shouldScrolling){
-      this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
-      this.shouldScrolling = false;
+    if (this.shouldScrolling){     
+        this.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
+        this.shouldScrolling = false;      
     }
   }
 
