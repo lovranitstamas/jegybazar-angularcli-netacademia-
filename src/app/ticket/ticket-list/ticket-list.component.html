@@ -34,7 +34,7 @@
 
   <tbody>
   <tr *ngFor="let ticket of tickets$ | async">
-    <td scope="row">
+    <td class="row">
       <a [routerLink]="['/event', ticket.eventId]">
         {{ ticket.event.name }}
       </a>
@@ -49,7 +49,7 @@
   </tbody>
 </table>
 
-<nav>
+<!--<nav>
   <ul class="pagination mt-5">
     <li class="page-item disabled">
       <a class="page-link" href="#" tabindex="-1">Előző</a>
@@ -63,4 +63,4 @@
       <a class="page-link" href="#">Következő</a>
     </li>
   </ul>
-</nav>
+</nav>-->

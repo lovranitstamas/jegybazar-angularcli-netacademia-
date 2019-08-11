@@ -6,7 +6,7 @@ export class UserModel {
   dateOfBirth: string;
   gender: string;
   profilePictureUrl: string;
-  tickets: { [key: string]: string }; 
+  tickets: { [key: string]: string };
 
   constructor(param?: UserModel) {
     if (param) {

@@ -1,114 +1,101 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserModel} from './user-model';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
-import {FirebaseRegistrationModel} from './firebase-registration-model'; 
-import {switchMap,tap,map, flatMap} from 'rxjs/operators'; 
-import {ReplaySubject} from 'rxjs'; 
-import * as firebase from 'firebase'; 
-import { from } from 'rxjs';
+import {from, Observable, ReplaySubject} from 'rxjs';
+import {flatMap, tap} from 'rxjs/operators';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
+import {environment} from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn$ = new ReplaySubject<boolean>(1); 
-
+  isLoggedIn$ = new ReplaySubject<boolean>(1);
   private _user = new ReplaySubject<UserModel>(1);
-  private _fbAuthData: any; 
 
   constructor(private _router: Router,
-              private _http: HttpClient) {
-    firebase.auth().onAuthStateChanged( 
-      (user) => { 
+              private afAuth: AngularFireAuth,
+              private afDb: AngularFireDatabase,
+              private _http: HttpClient
+  ) {
+    this.afAuth.authState.subscribe(
+      user => {
         if (user != null) {
-          this._fbAuthData = user; 
-          this.getUserById(user.uid).subscribe(remoteUser => {
-            //console.log(remoteUser);
-            this._user.next(remoteUser);
-          });
-          this.isLoggedIn$.next(true); 
-        } else { 
-          this._fbAuthData = null;
-          this._user.next(null); 
-          this.isLoggedIn$.next(false); 
-        } 
-      } 
-    ); 
-
-    //subject - both part can send
-    //in login no next, only subscriber, can not send
+          this.getUserById(user.uid).valueChanges().subscribe(
+            (remoteUser: UserModel) => this._user.next(remoteUser)
+          );
+          this.isLoggedIn$.next(true);
+        } else {
+          this._user.next(null);
+          this.isLoggedIn$.next(false);
+        }
+      }
+    );
+    // subject - both part can send
+    // in login no next, only subscriber, can not send
   }
-  
-  login(email: string, password: string) { 
+
+  login(email: string, password: string) {
     return from(
-      firebase.auth().signInWithEmailAndPassword(email,password)
+      this.afAuth.auth.signInWithEmailAndPassword(email, password)
     );
   }
 
   register(param: UserModel, password: string) {
-    return this._http.post<FirebaseRegistrationModel>(
-      `${environment.firebase.registrationUrl}?key=${environment.firebase.apiKey}`,
-      {
-        'email': param.email,
-        'password': password,
-        'returnSecureToken': true
-      }).pipe(
-          tap((fbAuthResponse: FirebaseRegistrationModel) => this._fbAuthData = fbAuthResponse),
-          map(fbreg => {
-            return {
-              id: fbreg.localId,
-              ...param
-            };
-          }),
-          switchMap(user => this.save(user)
-            .pipe(
-              tap(user => console.log('sikeres reg ezzel a userrel: ', user))
-            )     
-          )
+    return from(
+      this.afAuth.auth.createUserWithEmailAndPassword(param.email, password)
+    ).pipe(
+      tap(
+        (response) => {
+          this.save({ ...param, id: response.user.uid });
+        }
       )
+    );
   }
 
   save(param: UserModel) {
-    return this._http.put<UserModel>(`${environment.firebase.baseUrl}/users/${param.id}.json`, param)
+    return this.afDb.object(`users/${param.id}`).set(param)
+      .then(
+        user => user
+      );
   }
 
-  getUserById(fbid: string) { 
-    return this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbid}.json`); 
-  } 
+  getUserById(fbid: string): AngularFireObject<UserModel>  {
+    return this.afDb.object(`users/${fbid}`);
+  }
+
+  getUserByIdHttp(fbid: string) {
+    return this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbid}.json`);
+  }
 
   getCurrentUser() {
     return this._user.asObservable();
   }
 
-  getAllUsers() {
+  /*getAllUsers() {
     return this._http.get(`${environment.firebase.baseUrl}/users.json`).pipe(
       map(usersObject => Object.values(usersObject).map(user => new UserModel(user)))
     );
-  }
+  }*/
 
-  logout(){
-    firebase.auth().signOut();
+  logout() {
+    this.afAuth.auth.signOut();
     this._router.navigate(['/home']);
   }
 
-  addTicket(ticketId: string): Observable<string> {
+  addTicket(ticketId: string): Observable<any> {
     return this._user.pipe(
       flatMap(user => {
-        return this._http.patch( 
-          `${environment.firebase.baseUrl}/users/${user.id}/tickets.json`, 
-          {[ticketId]: true}
-        ).pipe( 
-          map(rel => Object.keys(rel)[0])
-        )
-      })
-    ); 
-  } 
+          return this.afDb.list(`users/${user.id}/tickets`).push({[ticketId]: true});
+        }
+      )
+    );
+  }
 
-  private _getMockData() {
-    /*return [
+  /*private _getMockData() {
+    return [
       new UserModel({
         id: 1,
         name: 'Pista ba',
@@ -136,6 +123,6 @@ export class UserService {
         gender: 'satan fattya',
         profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
       }),
-    ];*/
-  }
+    ];
+  }*/
 }
