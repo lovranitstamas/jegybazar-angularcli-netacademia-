@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
-//import {EventModel} from './event-model';
+// import {EventModel} from './event-model';
 import {EventModel} from '../shared/event-model';
 import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
-import {Observable} from 'rxjs';
-import {map,switchMap} from 'rxjs/operators';
+import {from, Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Injectable()
 export class EventService {
-  
-  constructor(private _http: HttpClient) {
+
+  constructor(private _http: HttpClient,
+              private afDb: AngularFireDatabase
+  ) {
     /*this._events = [
       new EventModel({
         id: 1,
@@ -79,38 +81,74 @@ export class EventService {
   }
 
   getAllEvents(): Observable<EventModel[]> {
-    return this._http.get<EventModel[]>(`${environment.firebase.baseUrl}/events.json`).pipe(
-    map(data => Object.values(data).map(evm => new EventModel(evm))));
+    return this.afDb.list<any>('events/').valueChanges()
+      .pipe(
+        map(
+          (events) =>
+            events.map(
+              event => {
+                console.log(event);
+                return new EventModel(Object.assign(event, {id: event.id}));
+              }
+            )
+        )
+      );
+    /*return this._http.get<EventModel[]>(`${environment.firebase.baseUrl}/events.json`).pipe(
+      map(data => Object.values(data).map(evm => new EventModel(evm))));*/
   }
 
   getEventById(id: string) {
-    return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
+    return this.afDb.object<any>(`events/${id}`).valueChanges();
+    // return this._http.get<EventModel>(`${environment.firebase.baseUrl}/events/${id}.json`);
   }
-  
+
   save(param: EventModel) {
-    console.log(param);
+    if (param.id) {
+      return from(this.afDb.object(`events/${param.id}`).update(param));
+    } else {
+      return from(
+        this.afDb.list(`events`).push(param)
+      ).pipe(
+        map((eventPostReturn: { key: string }) => {
+          return eventPostReturn.key;
+        }),
+        switchMap(eventId => this.afDb.object(
+          `events/${eventId}`).set({...param, id: eventId})
+        )
+      );
+    }
+
+    /*console.log(param);
     if (param.id) {
       return this._http.put(`${environment.firebase.baseUrl}/events/${param.id}.json`, param);
     } else {
       return this._http.post(`${environment.firebase.baseUrl}/events.json`, param).pipe(
-        map((fbPostReturn: { name: string }) => fbPostReturn.name)).pipe( 
-        switchMap(fbId => this._http.patch( 
-          `${environment.firebase.baseUrl}/events/${fbId}.json`, 
-          {id: fbId} 
-        ))); 
-    }
+        map((fbPostReturn: { name: string }) => fbPostReturn.name)).pipe(
+        switchMap(fbId => this._http.patch(
+          `${environment.firebase.baseUrl}/events/${fbId}.json`,
+          {id: fbId}
+        )));
+    }*/
   }
 
-  delete(param: EventModel) {
-    return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
+  delete(event: EventModel) {
+    return from(this.afDb.object(`events/${event.id}`).remove());
+    // return this._http.delete(`${environment.firebase.baseUrl}/events/${param.id}.json`);
   }
 
-  addTicket(eventId: string, ticketId: string): Observable<string> { 
-    return this._http.patch( 
-      `${environment.firebase.baseUrl}/events/${eventId}/tickets.json`, 
-      {[ticketId]: true} 
-    ).pipe( 
+  addTicket(eventId: string, ticketId: string): Observable<string> {
+    return from(this.afDb.list(`events/${eventId}/tickets`).push({[ticketId]: true}))
+      .pipe(
+        map(rel => {
+          console.log( Object.keys(rel)[0]);
+          return Object.keys(rel)[0];
+        })
+      );
+    /*return this._http.patch(
+      `${environment.firebase.baseUrl}/events/${eventId}/tickets.json`,
+      {[ticketId]: true}
+    ).pipe(
       map(rel => Object.keys(rel)[0])
-    );  
-  }   
+    );*/
+  }
 }

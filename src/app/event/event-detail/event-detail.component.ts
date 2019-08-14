@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-//import {EventService} from '../../shared/event.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+// import {EventService} from '../../shared/event.service';
 import {EventService} from '../event.service';
 import {EventModel} from '../../shared/event-model';
 import {ActivatedRoute} from '@angular/router';
@@ -17,40 +17,40 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   event: EventModel;
   viewForm = false;
 
-  //close all subscription
+  // close all subscription
   private _destroy$ = new Subject<void>();
 
-  constructor(private _route: ActivatedRoute, 
-              private _eventService: EventService, 
+  constructor(private _route: ActivatedRoute,
+              private _eventService: EventService,
               private _location: Location,
               public userService: UserService) {
   }
 
   ngOnInit() {
-    const evId = this._route.snapshot.params['id'];
+    const evId = this._route.snapshot.params.id;
 
-    //create an empty model while we wait for data
+    // create an empty model while we wait for data
     this.event = new EventModel();
 
-    //a method get true/false value in all case
-    //from false to true oninit and set false from click
-    //the other option is set true the default value
-    this.viewForm = !!evId; 
+    // a method get true/false value in all case
+    // from false to true oninit and set false from click
+    // the other option is set true the default value
+    this.viewForm = !!evId;
 
     if (evId) {
       this._eventService.getEventById(evId).pipe(
-      takeUntil(this._destroy$))
-      .subscribe(evm => (this.event = evm));
-    } 
+        takeUntil(this._destroy$))
+        .subscribe(evm => (this.event = evm));
+    }
   }
 
   ngOnDestroy() {
-    //through the takeUntil function will be closed all stream
-    //in this case it is not absolutely necessary because all http stream close itself
+    // through the takeUntil function will be closed all stream
+    // in this case it is not absolutely necessary because all http stream close itself
     // http://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
     this._destroy$.next();
     this._destroy$.complete();
-  
+
   }
 
   onSubmit() {
@@ -62,9 +62,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           console.warn(`Problémánk van a form mentésnél: ${err}`);
         }
       );
-  };
+  }
 
-  
   delete() {
     this._eventService.delete(this.event).pipe(
       takeUntil(this._destroy$))
