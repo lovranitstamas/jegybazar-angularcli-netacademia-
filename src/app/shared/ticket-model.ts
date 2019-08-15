@@ -36,15 +36,4 @@ export class TicketModel {
     Object.defineProperty(this, 'seller', sellerPropertyDescriptor);
     return this;
   }
-
-  /*static get emptyTicket(): TicketModel {
-    return {
-      date: '',
-      numberOfTickets: 0,
-      minimalBidPrice: 0,
-      bidStep: 0,
-      eventId: 0,
-      sellerUserId: 0
-    };
-  }*/
 }

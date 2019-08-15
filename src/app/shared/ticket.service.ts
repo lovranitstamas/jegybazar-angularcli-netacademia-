@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {TicketModel} from './ticket-model';
 import {UserService} from './user.service';
-// import { EventService } from './event.service';
 import {EventService} from '../event/event.service';
-import {first, map, switchMap, tap, flatMap} from 'rxjs/operators';
+import {first, flatMap, map, switchMap, tap} from 'rxjs/operators';
 import {combineLatest, forkJoin, from, Observable, of, zip} from 'rxjs';
 import {EventModel} from './event-model';
 import {UserModel} from './user-model';
@@ -55,19 +54,12 @@ export class TicketService {
     ticket.currentBid = 0;
 
     return from(this.afDb.list('tickets').push(ticket))
-    // konnyitsuk meg magunknak kicsit az eletunket es kuldjuk tovabb csak azt ami kell nekunk
       .pipe(
         map(resp => resp.key),
-        // ez itt amiatt kell, hogy meglegyen a fbid objektumon belul is,
-        // mert kesobb epitunk erre az infora
-        // viszont ezt csak a post valaszaban kapjuk vissza
-        // es legalabb hasznaljuk a patch-et is :)
         tap(
           ticketId => combineLatest(
             this._saveGeneratedId(ticket, ticketId),
-            // keszitsuk kicsit elo a jovilagot es vezessuk esemenyeknel is a hozzajuk tartozo ticketeket
             this._eventService.addTicket(ticket.eventId, ticketId),
-            // keszitsuk kicsit elo a jovilagot es vezessuk a profilunknal a hozzank tartozo ticketeket
             this._userService.addTicket(ticketId)
           )
         )
@@ -78,63 +70,13 @@ export class TicketService {
     return from(
       this.afDb.object(`tickets/${ticketId}`).set({...ticket, id: ticketId})
     );
-    /*return this._http.patch<{ id: string }>(
-      `${environment.firebase.baseUrl}/tickets/${ticketId}.json`,
-      {id: ticketId}
-    ).pipe(
-      map(x => x.id)
-    );*/
   }
-
 
   getOneOnce(id: string): Observable<TicketModel> {
     return this.getOne(id).pipe(first());
   }
 
   getOne(id: string): Observable<TicketModel> {
-    /*return this._http.get<TicketModel>(`${environment.firebase.baseUrl}/tickets/${id}.json`).pipe(
-    flatMap(
-    ticket => combineLatest(
-    of(new TicketModel(ticket)),
-        this._eventService.getEventById(ticket.eventId),
-        this._userService.getUserById(ticket.sellerUserId),
-          (t: TicketModel, e: EventModel, u: UserModel) => {
-            return t.setEvent(e).setSeller(u);
-            return {
-              ...t,
-              event: e,
-              seller: u
-            };
-          })
-       )
-    );*/
-
-    /*return new Observable(
-      observer => {
-        const dbTicket = firebase.database().ref(`tickets/${id}`);
-        dbTicket.on('value', snapshot => {
-          const ticket = snapshot.val();
-          const subscription = combineLatest(
-            of(new TicketModel(ticket)),
-            this._eventService.getEventById(ticket.eventId),
-            this._userService.getUserByIdHttp(ticket.sellerUserId),
-            (t: TicketModel, e: EventModel, u: UserModel) => {
-              return t.setEvent(e).setSeller(u);
-              // return {
-                // ...t,
-                // event: e,
-                // seller: u
-              // };
-            }).subscribe(
-            ticketModel => {
-              observer.next(ticketModel);
-              subscription.unsubscribe();
-            }
-          );
-        });
-      }
-    );*/
-
     return this.afDb.object<any>(`tickets/${id}`).valueChanges().pipe(
       flatMap(
         ticketFirebaseRemoteModel => {
@@ -152,7 +94,6 @@ export class TicketService {
 
   modify(ticket: TicketModel) {
     return from(this.afDb.object(`tickets/${ticket.id}`).update(ticket));
-    // return this._http.put(`${environment.firebase.baseUrl}/tickets/${ticket.id}.json`, ticket);
   }
 
 }

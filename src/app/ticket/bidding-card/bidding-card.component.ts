@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { TicketModel } from 'src/app/shared/ticket-model';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {TicketModel} from 'src/app/shared/ticket-model';
 
 @Component({
   selector: 'app-bidding-card',
@@ -9,23 +9,20 @@ import { TicketModel } from 'src/app/shared/ticket-model';
 })
 export class BiddingCardComponent implements OnChanges {
   @Input() ticket: TicketModel;
-  @Input() isLoggedIn: Boolean;
-  //@Output() refreshTicket = new EventEmitter<void>();
+  @Input() isLoggedIn: boolean;
   @Output() bid = new EventEmitter<void>();
-  //@Input() loading = false;
   loading = false;
 
-  ngOnChanges(changes:SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['ticket'] != null
       && !changes['ticket'].isFirstChange()
       && !changes['ticket'].currentValue != null) {
-        this.loading = false;
+      this.loading = false;
     }
   }
 
-  onBidWithBidStepBiddingCard() { 
-    //this.refreshTicket.emit();
+  onBidWithBidStepBiddingCard() {
     this.bid.emit();
-    this.loading = true;  
-  } 
+    this.loading = true;
+  }
 }

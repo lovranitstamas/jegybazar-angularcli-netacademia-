@@ -55,7 +55,7 @@ export class ChatService {
 
   getRoomMessages(roomId: string): Observable<ChatMessageModel[]> {
     return this.afDb.list<any>(`${ChatService.PATH}/${roomId}`)
-      .valueChanges() // add this!
+      .valueChanges()
       .pipe(
         map(list => list.map(chatMessage => {
             return new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.$key}));

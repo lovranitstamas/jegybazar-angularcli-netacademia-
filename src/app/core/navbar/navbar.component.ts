@@ -1,4 +1,4 @@
-import {Component, DoCheck, AfterViewChecked, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, DoCheck} from '@angular/core';
 import {UserService} from '../../shared/user.service';
 
 @Component({
@@ -13,23 +13,23 @@ export class NavbarComponent implements DoCheck, AfterViewChecked, AfterViewInit
   constructor(
     public userService: UserService,
     private cdr: ChangeDetectorRef) {
-      this.userService.isLoggedIn$.subscribe(
-        isLoggedIn => {
-          this.isLoggedIn = isLoggedIn;
-          this.cdr.detectChanges();
-        }
-      )
+    this.userService.isLoggedIn$.subscribe(
+      isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+        this.cdr.detectChanges();
+      }
+    );
   }
 
-  ngDoCheck(){
-    //console.log("navbar docheck");
+  ngDoCheck() {
+    // console.log("navbar docheck");
   }
 
-  ngAfterViewChecked(){
-    //console.log("navbar afterviewchecked");
+  ngAfterViewChecked() {
+    // console.log("navbar afterviewchecked");
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.cdr.detach();
   }
 

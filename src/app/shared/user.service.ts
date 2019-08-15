@@ -69,12 +69,6 @@ export class UserService {
     return this._user.asObservable();
   }
 
-  /*getAllUsers() {
-    return this._http.get(`${environment.firebase.baseUrl}/users.json`).pipe(
-      map(usersObject => Object.values(usersObject).map(user => new UserModel(user)))
-    );
-  }*/
-
   logout() {
     this.afAuth.auth.signOut();
     this._router.navigate(['/home']);
@@ -88,36 +82,4 @@ export class UserService {
       )
     );
   }
-
-  /*private _getMockData() {
-    return [
-      new UserModel({
-        id: 1,
-        name: 'Pista ba',
-        email: 'pistaba@pistaba.com',
-        address: 'pistaba lak 12',
-        dateOfBirth: '1900-01-01',
-        gender: 'male',
-        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
-      }),
-      new UserModel({
-        id: 2,
-        name: 'Marcsa',
-        email: 'marcsa@marcsa.hu',
-        address: 'marcsa var 42.',
-        dateOfBirth: '2000-01-01',
-        gender: 'female',
-        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
-      }),
-      new UserModel({
-        id: 3,
-        name: 'ifju satan',
-        email: 'mzx@mzx.hu',
-        address: 'namek',
-        dateOfBirth: '2199-02-01',
-        gender: 'satan fattya',
-        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4nBubms8tp5EDXG6LBhVyy4AES2WCqceh674hyF6rNwjYoJ4ddQ'
-      }),
-    ];
-  }*/
 }

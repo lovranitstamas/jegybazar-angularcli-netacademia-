@@ -38,7 +38,6 @@ export class BiddingCardFormComponent implements OnInit, OnChanges {
     }
   }
 
-  // bidMinimumValidator(this.ticket.currentBid + this.ticket.bidStep)
   ngOnInit(): void {
     // fill up the form with group method (the parameter is an object) of the service
     this.form = this.fb.group(

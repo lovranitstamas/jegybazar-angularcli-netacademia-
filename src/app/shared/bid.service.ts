@@ -38,25 +38,5 @@ export class BidService {
         }
       )
     );
-
-    /*const userId = 'pmhs4PEZp6VyW9sfg6gPPPPyRaa2';
-    return this._http
-      .put(`${environment.firebase.baseUrl}/bids/${ticketId}/${userId}.json`, value)
-      .pipe(
-        flatMap(
-          () => {
-            return this._ticketService.getOneOnce(ticketId);
-          }
-        ),
-        flatMap(
-          ticket => {
-            return this._ticketService.modify(
-              Object.assign(ticket,
-                {currentBid: value, bidCounter: ++ticket.bidCounter}
-              )
-            );
-          }
-        )
-      );*/
   }
 }

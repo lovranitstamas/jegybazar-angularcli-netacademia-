@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 
 @Component({
   selector: 'app-ticket',
@@ -8,11 +8,12 @@ import { Component, ChangeDetectorRef, AfterViewInit, ChangeDetectionStrategy } 
 })
 export class TicketComponent implements AfterViewInit {
 
-  constructor(private cdr:ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {
+  }
 
   ngAfterViewInit() {
-    //this.cdr.detach();
-    //not useable way
+    // this.cdr.detach();
+    // not useable way
   }
 
 }

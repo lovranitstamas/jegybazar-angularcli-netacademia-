@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck, AfterViewChecked } from '@angular/core';
+import {AfterViewChecked, Component, DoCheck, Input} from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar-item',
@@ -6,15 +6,15 @@ import { Component, OnInit, Input, DoCheck, AfterViewChecked } from '@angular/co
   styleUrls: ['./nav-bar-item.component.scss']
 })
 export class NavBarItemComponent implements DoCheck, AfterViewChecked {
-  @Input() url:string;
-  @Input() name:string;
+  @Input() url: string;
+  @Input() name: string;
 
-  ngDoCheck(){
-    //console.log("navbar docheck");
+  ngDoCheck() {
+    // console.log("navbar docheck");
   }
 
-  ngAfterViewChecked(){
-    //console.log("navbar afterviewchecked");
+  ngAfterViewChecked() {
+    // console.log("navbar afterviewchecked");
   }
 
 }

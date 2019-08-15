@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TicketModel} from '../../shared/ticket-model';
 import {EventModel} from '../../shared/event-model';
 import {UserService} from '../../shared/user.service';
-// import { EventService } from '../../shared/event.service';
 import {EventService} from '../../event/event.service';
 import {TicketService} from '../../shared/ticket.service';
 import {Router} from '@angular/router';
@@ -15,7 +14,6 @@ import {Observable, Subscription} from 'rxjs';
 })
 export class TicketDetailComponent implements OnInit, OnDestroy {
   ticket: TicketModel;
-  // events: EventModel[];
   events$: Observable<EventModel[]>;
   private _subs: Subscription;
 
@@ -28,9 +26,8 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.ticket = new TicketModel();
-
-    // not beautiful
     this.ticket.eventId = '';
+
     this._userService.getCurrentUser().subscribe(
       user => this.ticket.sellerUserId = user.id
     );

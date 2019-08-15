@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {EventcardComponent} from './eventcard.component';
-import {RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -11,8 +11,9 @@ import {RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
   ],
-  exports:[
+  exports: [
     EventcardComponent
   ]
 })
-export class EventcardModule { }
+export class EventcardModule {
+}

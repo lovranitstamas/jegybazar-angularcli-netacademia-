@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../shared/user.service';
 
 @Component({
@@ -8,12 +8,13 @@ import {UserService} from '../../shared/user.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private _userService: UserService) { }
+  constructor(private _userService: UserService) {
+  }
 
   ngOnInit() {
   }
 
   register() {
-    //this._userService.register();
+    // this._userService.register();
   }
 }

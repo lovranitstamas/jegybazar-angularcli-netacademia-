@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ChatMessageModel } from '../model/chat.model';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChatMessageModel} from '../model/chat.model';
 
 @Component({
   selector: 'app-chat-message-row',

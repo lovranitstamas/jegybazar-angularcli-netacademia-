@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { distinctUntilChanged, skip } from 'rxjs/operators'; 
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {distinctUntilChanged, skip} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-message-send-form',
@@ -13,12 +13,13 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
   @ViewChild('chatMessageInput') chatMessageInput: ElementRef;
   @Output() newMessage = new EventEmitter<string>();
   @Input() reset = false;
-  @Output() resetChange = new EventEmitter<boolean>();  
+  @Output() resetChange = new EventEmitter<boolean>();
   private _disabled = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+  }
 
-  ngOnInit(){
+  ngOnInit() {
 
     this.form = this.fb.group({
       'chat-message': [null, Validators.required]
@@ -30,26 +31,26 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
         distinctUntilChanged(
           msg => {
             // van adat -> true && false -> false -> i
-            //nincs     -> false && false -> false -> i
-            return !(msg.length > 0 && this.invalidChatMessageInput)
+            // nincs -> false && false -> false -> i
+            return !(msg.length > 0 && this.invalidChatMessageInput);
           }
         ),
         skip(1)
       )
       .subscribe(
-        //msg => console.log(msg)
+        // msg => console.log(msg)
         () => this.invalidChatMessageInput = false
-      ); 
+      );
   }
 
-  ngOnChanges (changes: SimpleChanges):void {
-    if(changes['reset'] !=null 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['reset'] != null
       && changes['reset'].isFirstChange() === false
-      && changes['reset'].currentValue === true){
-        this.form.reset({'chat-message': null});
-        this.chatMessageInput.nativeElement.focus();
-        this.disabled = false;
-      }
+      && changes['reset'].currentValue === true) {
+      this.form.reset({'chat-message': null});
+      this.chatMessageInput.nativeElement.focus();
+      this.disabled = false;
+    }
 
   }
 
@@ -59,15 +60,15 @@ export class ChatMessageSendFormComponent implements OnInit, OnChanges {
 
   set disabled(value: boolean) {
     this._disabled = value;
-    if (value === true){
+    if (value === true) {
       this.form.get('chat-message').disable();
     } else {
       this.form.get('chat-message').enable();
     }
   }
 
-  sendMessage(){
-    if (this.form.invalid){
+  sendMessage() {
+    if (this.form.invalid) {
       this.invalidChatMessageInput = true;
       this.chatMessageInput.nativeElement.focus();
     } else {

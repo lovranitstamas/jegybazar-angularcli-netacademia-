@@ -54,13 +54,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   updateUser() {
     this._userService.save(this.user);
     this._goToProfile();
-      /*.pipe(
-        takeUntil(this._destroy$)
-      )
-      .subscribe(
-        () => this._goToProfile(),
-        err => console.warn('user save kozben problemank adodott: ', err)
-      );*/
   }
 
   private _goToProfile() {

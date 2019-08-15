@@ -1,16 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
-//import {EventComponent} from './event/event.component';
-//import {EventListComponent} from './event/event-list/event-list.component';
-//import {EventDetailComponent} from './event/event-detail/event-detail.component';
 import {TicketComponent} from './ticket/ticket.component';
 import {TicketListComponent} from './ticket/ticket-list/ticket-list.component';
 import {TicketDetailComponent} from './ticket/ticket-detail/ticket-detail.component';
 import {BidComponent} from './ticket/bid/bid.component';
-//import {AboutComponent} from './about/about.component';
 import {LoginComponent} from './user/login/login.component';
-//import {RegistrationComponent} from './user/registration/registration.component';
 import {ProfileComponent} from './user/profile/profile.component';
 import {ProfileEditComponent} from './user/profile-edit/profile-edit.component';
 import {PageNotFoundComponent} from './core/page-not-found/page-not-found.component';
@@ -57,16 +52,11 @@ const routes: Routes = [
 export class AppRoutingModule {
   static routableComponents = [
     HomeComponent,
-    //EventComponent,
-    //EventListComponent,
-    //EventDetailComponent,
     TicketComponent,
     TicketListComponent,
     TicketDetailComponent,
     BidComponent,
-    //AboutComponent,
     LoginComponent,
-    //RegistrationComponent,
     ProfileComponent,
     ProfileEditComponent,
     PageNotFoundComponent

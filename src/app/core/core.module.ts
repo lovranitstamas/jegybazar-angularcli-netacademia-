@@ -3,10 +3,10 @@ import {CommonModule} from '@angular/common';
 import {NavbarComponent} from './navbar/navbar.component';
 import {JumbotronComponent} from './jumbotron/jumbotron.component';
 import {FooterComponent} from './footer/footer.component';
-import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.component'; 
+import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.component';
 import {NavBarItemComponent} from './nav-bar-item/nav-bar-item.component';
-import { CollapseModule } from 'ngx-bootstrap';
-import { RouterModule } from '@angular/router';
+import {CollapseModule} from 'ngx-bootstrap';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,11 +21,12 @@ import { RouterModule } from '@angular/router';
     CollapseModule,
     RouterModule
   ],
-  exports:[
+  exports: [
     NavbarComponent,
     JumbotronComponent,
     FooterComponent,
     LoadingSpinnerComponent,
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

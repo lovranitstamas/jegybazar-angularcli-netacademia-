@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-// import {EventService} from '../../shared/event.service';
 import {EventService} from '../event.service';
 import {EventModel} from '../../shared/event-model';
 import {UserService} from '../../shared/user.service';
@@ -13,10 +12,6 @@ import {delay, distinctUntilChanged, flatMap, map} from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventListComponent implements OnInit, AfterViewInit {
-
-  // public eventsGrouppedBy3: EventModel[];
-  // public events$: Observable<EventModel[]>;
-  // public eventsGrouppedBy3$: Observable<EventModel[][]>;
   public events$: Observable<EventModel[]>;
   @ViewChild('searchInput') searchInput: ElementRef;
   private filteredText$ = new BehaviorSubject<string>(null);
@@ -25,10 +20,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
               public userService: UserService) {
   }
 
-
   ngAfterViewInit(): void {
     const input = document.querySelector('#search-input');
-    // console.log(this.searchInput);
     // this.searchInput.nativeElement
     fromEvent(input, 'keyup').pipe(
       delay(300),
@@ -49,27 +42,6 @@ export class EventListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // [0,1,2],[3,4,5]
-    /*this.eventsGrouppedBy3 = this._eventService.getAllEvents()
-    .reduce((acc, curr: EventModel, ind: number) => {
-      if (ind % 3 === 0) {
-        // []
-        acc.push([]);
-      }
-      acc[acc.length - 1].push(curr);
-      return acc;
-    }, []);*/
-    // this.events$ = this._eventService.getAllEvents();
-    /*this._eventService.getAllEvents().subscribe(data => {
-      this.eventsGrouppedBy3 = data.reduce((acc, curr: EventModel, ind: number) => {
-        if (ind % 3 === 0) {
-          // []
-          acc.push([]);
-        }
-        acc[acc.length - 1].push(curr);
-        return acc;
-      }, [])
-    });*/
     this.events$ = this._eventService.getAllEvents().pipe(
       flatMap(
         events => {
@@ -89,18 +61,7 @@ export class EventListComponent implements OnInit, AfterViewInit {
             )
           );
         }
-      )/*,
-      map(data => {
-          return data.reduce((acc: Array<any>, curr: EventModel, ind: number) => {
-            if (ind % 3 === 0) {
-              // []
-              acc.push([]);
-            }
-            acc[acc.length - 1].push(curr);
-            return acc;
-          }, []);
-        }
-      )*/
+      )
     );
   }
 
