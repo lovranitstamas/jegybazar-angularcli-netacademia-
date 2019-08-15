@@ -18,7 +18,7 @@ export class TicketService {
               private afDb: AngularFireDatabase) {
   }
 
-  getAllTickets() {
+  getAllTickets(): Observable<TicketModel[]> {
     // 1.) query all ticket in object via http get. We get objects
     // {key1: ticketObject1, key2: TicketObject2, key3: ticketObject3, ...}
     // 2. convert it to [ticketObject1, ticketObject2, ticketObject3, ...] with Object.values()
@@ -66,12 +66,6 @@ export class TicketService {
       );
   }
 
-  private _saveGeneratedId(ticket: TicketModel, ticketId: string) {
-    return from(
-      this.afDb.object(`tickets/${ticketId}`).set({...ticket, id: ticketId})
-    );
-  }
-
   getOneOnce(id: string): Observable<TicketModel> {
     return this.getOne(id).pipe(first());
   }
@@ -94,6 +88,12 @@ export class TicketService {
 
   modify(ticket: TicketModel) {
     return from(this.afDb.object(`tickets/${ticket.id}`).update(ticket));
+  }
+
+  private _saveGeneratedId(ticket: TicketModel, ticketId: string) {
+    return from(
+      this.afDb.object(`tickets/${ticketId}`).set({...ticket, id: ticketId})
+    );
   }
 
 }
