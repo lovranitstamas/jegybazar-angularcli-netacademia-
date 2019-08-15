@@ -1,44 +1,44 @@
-import { Component, Input, AfterViewInit, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
-import { TicketModel } from 'src/app/shared/ticket-model';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {TicketModel} from 'src/app/shared/ticket-model';
 
 @Component({
   selector: 'app-ticket-details-card',
   templateUrl: './ticket-details-card.component.html',
   styleUrls: ['./ticket-details-card.component.scss']
 })
-export class TicketDetailsCardComponent implements AfterViewInit, OnChanges{
+export class TicketDetailsCardComponent implements AfterViewInit, OnChanges {
   @Input() ticket: TicketModel;
   @Input() loading = false;
 
-  constructor(private cdr:ChangeDetectorRef){
+  constructor(private cdr: ChangeDetectorRef) {
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.cdr.detach();
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes['loading'] != null
-       && !changes['loading'].isFirstChange()
-       && changes['loading'].currentValue != changes['loading'].previousValue){
-         this.cdr.detectChanges();
-       } else if (changes['ticket'] != null
-       && !changes['ticket'].isFirstChange()){
-         const prev:TicketModel = changes['ticket'].previousValue;
-         const current: TicketModel = changes['ticket'].currentValue;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['loading'] != null
+      && !changes['loading'].isFirstChange()
+      && changes['loading'].currentValue !== changes['loading'].previousValue) {
+      this.cdr.detectChanges();
+    } else if (changes['ticket'] != null
+      && !changes['ticket'].isFirstChange()) {
+      const prev: TicketModel = changes['ticket'].previousValue;
+      const current: TicketModel = changes['ticket'].currentValue;
 
-         if (prev == null || current == null){
-          this.cdr.detectChanges();
-         } else if (prev.seller.name != current.seller.name){
-          this.cdr.detectChanges();
-         } else if (prev.numberOfTickets != current.numberOfTickets){
-          this.cdr.detectChanges();
-         } else if (prev.bidEndDate != current.bidEndDate){
-          this.cdr.detectChanges();
-         } else if (prev.details != current.details){
-          this.cdr.detectChanges();
-         } 
+      if (prev == null || current == null) {
+        this.cdr.detectChanges();
+      } else if (prev.seller.name !== current.seller.name) {
+        this.cdr.detectChanges();
+      } else if (prev.numberOfTickets !== current.numberOfTickets) {
+        this.cdr.detectChanges();
+      } else if (prev.bidEndDate !== current.bidEndDate) {
+        this.cdr.detectChanges();
+      } else if (prev.details !== current.details) {
+        this.cdr.detectChanges();
+      }
 
-       }
+    }
   }
 }

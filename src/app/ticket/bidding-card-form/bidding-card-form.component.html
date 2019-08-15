@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-8">
         <button class="btn btn-primary text-light" (click)="onBidWithBidStepClickEvent()" [disabled]="disabled">
-          Licit a következő legkisebb licittel: {{+ticket.currentBid + +ticket.bidStep}} Ft
+          Licit a következő legkisebb licittel: {{buttonNextBidLabel}} Ft
         </button>
       </div>
       <div class="col-4" *ngIf="disabled">
@@ -18,40 +18,40 @@
       </div>
     </div>
   </div>
-  <div class="col-12">      
+  <div class="col-12">
     <a href="#" (click)="displayBidWithStep($event)" [ngClass]="{'disabled':disabled}">
       Inkább megadom én a licit értékét
-    </a>  
-  </div>  
-</div>  
+    </a>
+  </div>
+</div>
 <ng-template #bidWithValue>
-  
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!--<input type="text" *ngIf="form.get('bid2')" formControlName="bid2">-->
     <div class="row mt-3">
       <div class="col-6">
-        <input [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}" 
-              formControlName="bid" 
-              type="number" 
-              class="form-control" 
+        <input [ngClass]="{'is-invalid':submitted && form.get('bid').invalid}"
+              formControlName="bid"
+              type="number"
+              class="form-control"
               placeholder="Add meg a licit értéket"
               >
         <div class="invalid-feedback mt-2 font-weight-bold" *ngIf="submitted && form.get('bid').hasError('required')">
           <h6>Kérem töltse ki a mezőt!</h6>
         </div>
         <div class="invalid-feedback mt-2 font-weight-bold" *ngIf="submitted && form.get('bid').hasError('validateMinimumBid')">
-          <h6>A minimum érték nem megfelelő. Legalább {{+ticket.currentBid + +ticket.bidStep}} Ft megadása kötelező! </h6>
+          <h6>A minimum érték nem megfelelő. Legalább {{buttonNextBidLabel}} Ft megadása kötelező! </h6>
         </div>
       </div>
       <div class="col-2"><h4 class="pt-1">Ft</h4></div>
       <div class="col-4">
         <button *ngIf="disabled == false; else loadingSubmit"
-                type="submit" 
-                class="btn btn-primary text-light" 
+                type="submit"
+                class="btn btn-primary text-light"
                 role="button">Licitálok</button>
-        <ng-template #loadingSubmit>      
+        <ng-template #loadingSubmit>
           <app-loading-spinner [loaderWidth]="30" [loaderHeight]="30"></app-loading-spinner>
-        </ng-template>    
+        </ng-template>
       </div>
     </div>
   </form>

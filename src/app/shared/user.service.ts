@@ -4,9 +4,8 @@ import {UserModel} from './user-model';
 import {from, Observable, ReplaySubject} from 'rxjs';
 import {flatMap, tap} from 'rxjs/operators';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFireDatabase, AngularFireObject} from '@angular/fire/database';
-import {environment} from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {AngularFireDatabase} from '@angular/fire/database';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class UserService {
     this.afAuth.authState.subscribe(
       user => {
         if (user != null) {
-          this.getUserById(user.uid).valueChanges().subscribe(
+          this.getUserById(user.uid).subscribe(
             (remoteUser: UserModel) => this._user.next(remoteUser)
           );
           this.isLoggedIn$.next(true);
@@ -49,7 +48,7 @@ export class UserService {
     ).pipe(
       tap(
         (response) => {
-          this.save({ ...param, id: response.user.uid });
+          this.save({...param, id: response.user.uid});
         }
       )
     );
@@ -62,12 +61,8 @@ export class UserService {
       );
   }
 
-  getUserById(fbid: string): AngularFireObject<UserModel>  {
-    return this.afDb.object(`users/${fbid}`);
-  }
-
-  getUserByIdHttp(fbid: string) {
-    return this._http.get<UserModel>(`${environment.firebase.baseUrl}/users/${fbid}.json`);
+  getUserById(fbid: string) {
+    return this.afDb.object(`users/${fbid}`).valueChanges();
   }
 
   getCurrentUser() {

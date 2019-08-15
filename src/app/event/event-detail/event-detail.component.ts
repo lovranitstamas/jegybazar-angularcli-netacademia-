@@ -40,7 +40,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     if (evId) {
       this._eventService.getEventById(evId).pipe(
         takeUntil(this._destroy$))
-        .subscribe(evm => (this.event = evm));
+        .subscribe(evm => this.event = evm);
     }
   }
 

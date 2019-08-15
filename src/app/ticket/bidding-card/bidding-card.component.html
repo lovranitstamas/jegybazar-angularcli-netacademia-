@@ -1,6 +1,6 @@
 <div class="card mt-2">
   <div class="card-body">
-    <h4 class="card-title">Licit adatok 
+    <h4 class="card-title">Licit adatok
       <app-loading-spinner *ngIf="loading" class="float-right" [loaderWidth]="30" [loaderHeight]="30"></app-loading-spinner>
     </h4>
     <table class="table table-responsive table-hover d-table">
@@ -11,7 +11,7 @@
         </tr>
         <tr>
           <th scope="row">Jelenlegi licit:</th>
-          <td>{{ticket.currentBid}}</td>
+          <td>{{ticket.currentBid}} Ft</td>
         </tr>
         <tr>
           <th scope="row">Licitek száma:</th>
@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <th scope="row">Licit lépcső:</th>
-          <td>{{ticket.bidStep}}</td>
+          <td>{{ticket.bidStep}} Ft</td>
         </tr>
         <tr>
           <td colspan="2">Licit lejár <strong>{{ticket.bidEndDate | amFromUnix | amTimeAgo}}</strong></td>

@@ -29,10 +29,10 @@
       </div>
 
       <div class="form-group">
-        <label for="idopont">Időpont</label>
+        <label for="idopont">Licit végének dátuma</label>
         <input type="date" class="form-control mb-3" id="idopont"
                 placeholder="időpont"
-                [(ngModel)]="ticket.date" name="date"
+                [(ngModel)]="ticket.bidEndDate" name="date"
                 required
                 #date="ngModel"
                 required
@@ -73,6 +73,19 @@
                 required
         >
         <alert type="danger" *ngIf="bidStep.touched && bidStep.invalid">Kötelező mező!</alert>
+      </div>
+
+      <h4 class="my-3">Kiegészítő információk</h4>
+
+      <div class="form-group">
+        <label for="leiras">Leírás</label>
+        <input type="text" class="form-control mb-3" id="leiras"
+               placeholder="Rövid leírás"
+               required
+               [(ngModel)]="ticket.details" name="details"
+               #details="ngModel"
+        >
+        <alert type="danger" *ngIf="details.touched && details.invalid">Kötelező mező!</alert>
       </div>
 
       <div class="text-center mb-3">
