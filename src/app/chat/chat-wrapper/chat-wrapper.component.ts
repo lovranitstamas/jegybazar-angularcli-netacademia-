@@ -15,6 +15,7 @@ export class ChatWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.openChat({ title: 'test ablak', roomId: 'testelo' });
+    this.openChat({ title: 'test ablak', roomId: 'testelo2' });
   }
 
   openChat(config: ChatWindowConfig) {

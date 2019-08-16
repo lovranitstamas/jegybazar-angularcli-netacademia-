@@ -33,6 +33,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   collapseBody = false; // boolean
   @HostBinding('style.height') height = '100%';
   private shouldScrolling = false;
+  @Input() @HostBinding('class.floating') floating = true;
 
   constructor(
     private _chatService: ChatService
