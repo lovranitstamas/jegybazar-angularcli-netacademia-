@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 500px;
   /*height: 100%;*/
-  max-height: 450px;
+  max-height: 450px; // remove later
 
   position: fixed;
   bottom: 0;
@@ -13,6 +13,7 @@
 
 :host > .card {
   height: 100%;
+  /*max-height: 450px; course*/
 }
 
 .card > .card-body {

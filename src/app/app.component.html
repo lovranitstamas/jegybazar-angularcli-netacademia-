@@ -5,4 +5,4 @@
 </div>
 
 <app-footer></app-footer>
-<app-chat-wrapper></app-chat-wrapper>
+<app-chat-wrapper  *ngIf="isLoggedIn$ | async"></app-chat-wrapper>
