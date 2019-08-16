@@ -1,12 +1,14 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {ChatWindowConfig} from '../model/chat-window.config';
+import {ChatService} from '../chat.service';
 
 @Component({
   selector: 'app-chat-wrapper',
   templateUrl: './chat-wrapper.component.html',
   styleUrls: ['./chat-wrapper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ChatService]
 })
 export class ChatWrapperComponent implements OnInit {
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);

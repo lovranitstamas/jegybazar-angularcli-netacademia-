@@ -29,7 +29,6 @@ import { ChatFriendListComponent } from './chat-friend-list/chat-friend-list.com
     MomentModule
   ],
   exports: [
-    ChatWindowComponent,
     ChatWrapperComponent
   ]
 })

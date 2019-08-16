@@ -3,8 +3,9 @@ import {UserService} from '../shared/user.service';
 import {Observable} from 'rxjs';
 import {ChatMessageModel} from './model/chat.model';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap} from 'rxjs/operators';
 import * as moment from 'moment';
+import {ChatFriendModel} from './model/chat-friend.model';
 
 
 @Injectable({
@@ -62,5 +63,27 @@ export class ChatService {
             return new ChatMessageModel(Object.assign(chatMessage, {$id: chatMessage.$key}));
           })
         ));
+  }
+
+  getMyFriendList() {
+    return this._userService.getCurrentUser().pipe(
+      first(),
+      switchMap(
+        user => {
+          return this.afDb.list(`chat_friend_list/${user.id}`).snapshotChanges()
+            .pipe(
+              map(
+                friends =>
+                  friends.map(
+                    friend => {
+                      console.log(friend);
+                      return new ChatFriendModel({$id: friend.key});
+                    }
+                  )
+              )
+            );
+        }
+      )
+    );
   }
 }
