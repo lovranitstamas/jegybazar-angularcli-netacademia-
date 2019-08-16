@@ -1,6 +1,5 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -12,6 +11,7 @@ import {
 import {Observable} from 'rxjs';
 import {ChatMessageModel} from '../model/chat.model';
 import {ChatService} from '../chat.service';
+import {delay, first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-window',
@@ -20,7 +20,7 @@ import {ChatService} from '../chat.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ChatService]
 })
-export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewInit {
+export class ChatWindowComponent implements OnInit, AfterViewChecked {
   @Input() roomId; // environment.production ? null : MockedChatDatas.mockedRoomId;
   chatMessages$: Observable<ChatMessageModel[]>;
   resetForm = false;
@@ -36,14 +36,12 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewI
 
   ngOnInit() {
     this.chatMessages$ = this._chatService.getRoomMessages(this.roomId);
-    this.shouldScrolling = true; // or the default state is true
-  }
-
-  ngAfterViewInit(): void {
-    window.setTimeout(() => {
-      // his.cardBody.nativeElement.scrollTo(0, this.cardBody.nativeElement.scrollHeight);
-      document.querySelector('#card-body').scrollTop = this.cardBody.nativeElement.scrollHeight;
-    }, 500);
+    this.chatMessages$.pipe(first(), delay(500)).subscribe(
+      () => {
+        this.shouldScrolling = true;
+        this.ngAfterViewChecked();
+      }
+    );
   }
 
   ngAfterViewChecked(): void {
