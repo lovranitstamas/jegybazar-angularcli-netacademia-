@@ -2,10 +2,10 @@ import {
   AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   HostBinding,
   Input,
-  OnInit,
+  OnInit, Output,
   ViewChild
 } from '@angular/core';
 import {Observable} from 'rxjs';
@@ -21,7 +21,12 @@ import {delay, first} from 'rxjs/operators';
   providers: [ChatService]
 })
 export class ChatWindowComponent implements OnInit, AfterViewChecked {
+  @Input() id: string;
   @Input() roomId; // environment.production ? null : MockedChatDatas.mockedRoomId;
+  @Input() title: string;
+  @Input() closeable = false;
+  @Output() close = new EventEmitter<void>();
+
   chatMessages$: Observable<ChatMessageModel[]>;
   resetForm = false;
   @ViewChild('cardBody') cardBody: ElementRef;
@@ -77,5 +82,9 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     } else {
       this.height = '100%';
     }
+  }
+
+  closeWindow() {
+    this.close.emit();
   }
 }

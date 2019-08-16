@@ -10,6 +10,8 @@ import {CoreModule} from '../core/core.module';
 import {ChatMessageRowComponent} from './chat-message-row/chat-message-row.component';
 import {ChatMessageSendFormComponent} from './chat-message-send-form/chat-message-send-form.component';
 import {MomentModule} from 'angular2-moment';
+import { ChatWrapperComponent } from './chat-wrapper/chat-wrapper.component';
+import { ChatFriendListComponent } from './chat-friend-list/chat-friend-list.component';
 
 /*export const chatServiceProvidefactoryFn =
   (userService: UserService) => {
@@ -19,7 +21,7 @@ import {MomentModule} from 'angular2-moment';
   };*/
 
 @NgModule({
-  declarations: [ChatWindowComponent, ChatMessageRowComponent, ChatMessageSendFormComponent],
+  declarations: [ChatWindowComponent, ChatMessageRowComponent, ChatMessageSendFormComponent, ChatWrapperComponent, ChatFriendListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,7 +29,8 @@ import {MomentModule} from 'angular2-moment';
     MomentModule
   ],
   exports: [
-    ChatWindowComponent
+    ChatWindowComponent,
+    ChatWrapperComponent
   ]
 })
 export class ChatModule {

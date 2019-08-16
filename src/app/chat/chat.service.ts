@@ -11,7 +11,8 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class ChatService {
-  private static PATH = 'chat/ticket_room';
+  // private static PATH = 'chat/ticket_room';
+  private static PATH = 'chat';
 
   constructor(
     protected _userService: UserService,
