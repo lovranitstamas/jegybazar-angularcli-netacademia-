@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ChatFriendModel} from '../model/chat-friend.model';
 import {Observable} from 'rxjs';
 import {ChatService} from '../chat.service';
@@ -8,7 +8,7 @@ import {ChatService} from '../chat.service';
   templateUrl: './chat-friend-list.component.html',
   styleUrls: ['./chat-friend-list.component.scss']
 })
-export class ChatFriendListComponent implements OnInit {
+export class ChatFriendListComponent implements AfterViewInit {
 
   friendList$: Observable<ChatFriendModel[]>;
 
@@ -17,7 +17,7 @@ export class ChatFriendListComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.friendList$ = this.chatService.getMyFriendList();
   }
 
