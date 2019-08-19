@@ -3,10 +3,9 @@ import {UserService} from '../shared/user.service';
 import {Observable} from 'rxjs';
 import {ChatMessageModel} from './model/chat.model';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {first, map, switchMap} from 'rxjs/operators';
+import {first, flatMap, map, switchMap} from 'rxjs/operators';
 import * as moment from 'moment';
 import {ChatFriendModel} from './model/chat-friend.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -68,22 +67,38 @@ export class ChatService {
   getMyFriendList() {
     return this._userService.getCurrentUser().pipe(
       first(),
-      switchMap(
+      flatMap(
         user => {
-          return this.afDb.list(`chat_friend_list/${user.id}`).snapshotChanges()
+          return this.afDb.list<any>(`chat_friend_list/${user.id}`).snapshotChanges()
             .pipe(
               map(
-                friends =>
-                  friends.map(
-                    friend => {
-                      console.log(friend);
-                      return new ChatFriendModel({$id: friend.key});
-                    }
-                  )
+                friends => friends.map(
+                  friend => {
+                    // console.log({...friend.payload.val(), $id: friend.key});
+                    return new ChatFriendModel({...friend.payload.val(), $id: friend.key});
+                  }
+                )
               )
+            );
+        })
+    );
+  }
+
+  /*getMyFriendList() {
+    return this._userService.getCurrentUser().pipe(
+      first(),
+      flatMap(
+        user => {
+          return this.afDb.list<any>(`chat_friend_list/${user.id}`).snapshotChanges()
+            .pipe(map(
+              friends => {
+                return friends.map(friend => {
+                  return new ChatFriendModel({...friend.payload.val(), $id: friend.key});
+                });
+              })
             );
         }
       )
     );
-  }
+  }*/
 }
