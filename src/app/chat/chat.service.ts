@@ -3,7 +3,7 @@ import {UserService} from '../shared/user.service';
 import {Observable} from 'rxjs';
 import {ChatMessageModel} from './model/chat.model';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {first, flatMap, map, switchMap} from 'rxjs/operators';
+import {first, map, switchMap} from 'rxjs/operators';
 import * as moment from 'moment';
 import {ChatFriendModel} from './model/chat-friend.model';
 
@@ -64,10 +64,10 @@ export class ChatService {
         ));
   }
 
-  getMyFriendList() {
+  getMyFriendList(): Observable<ChatFriendModel[]> {
     return this._userService.getCurrentUser().pipe(
       first(),
-      flatMap(
+      switchMap(
         user => {
           return this.afDb.list<any>(`chat_friend_list/${user.id}`).snapshotChanges()
             .pipe(
