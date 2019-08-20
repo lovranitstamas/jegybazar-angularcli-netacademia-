@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ChatFriendModel} from '../model/chat-friend.model';
 import {Observable} from 'rxjs';
 import {ChatService} from '../chat.service';
@@ -8,8 +8,8 @@ import {ChatService} from '../chat.service';
   templateUrl: './chat-friend-list.component.html',
   styleUrls: ['./chat-friend-list.component.scss']
 })
-export class ChatFriendListComponent implements AfterViewInit {
-
+export class ChatFriendListComponent implements OnInit {
+  @Output() select = new EventEmitter<ChatFriendModel>();
   friendList$: Observable<ChatFriendModel[]>;
 
   constructor(
@@ -17,9 +17,12 @@ export class ChatFriendListComponent implements AfterViewInit {
   ) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.friendList$ = this.chatService.getMyFriendList();
   }
 
+  onSelectFriend(friend: ChatFriendModel) {
+    this.select.emit(friend);
+  }
 
 }

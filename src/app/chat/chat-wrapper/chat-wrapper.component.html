@@ -7,8 +7,10 @@
     [closeable]="config.closeable"
     [floating]="false"
     class="col-sm col-md-3 align-self-end"
+    (close)="removeChat(config.id)"
   ></app-chat-window>
   <app-chat-friend-list
     class="col-sm col-md-2 align-self-end ml-auto"
+    (select)="onSelectFriend($event)"
   ></app-chat-friend-list>
 </div>
