@@ -5,6 +5,7 @@ import {ChatService} from '../chat.service';
 import {ChatFriendModel} from '../model/chat-friend.model';
 import {first} from 'rxjs/operators';
 import {UserService} from '../../shared/user.service';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Component({
   selector: 'app-chat-wrapper',
@@ -18,14 +19,15 @@ export class ChatWrapperComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _chatService: ChatService
+    private _chatService: ChatService,
+    private afDb: AngularFireDatabase
   ) {
     this._chatService.getChatCallWatcher().subscribe(
       data => {
         if (data != null && data.length > 0) {
           data.forEach(
             call => {
-              this.openChat({ title: call.friend.name, roomId: call.roomId, friend: call.friend });
+              this.openChat({title: call.friend.name, roomId: call.roomId, friend: call.friend});
               this._chatService.removeWatcher(call.friend.$id);
             }
           );
@@ -43,6 +45,9 @@ export class ChatWrapperComponent implements OnInit {
     const windows = this.windows$.getValue();
     if (windows.find(_config => _config.roomId === `friend_list/${config.roomId}`)
       == null) {
+
+      this._chatService.addChatWait(config.roomId, config.friend);
+
       if (config.id === null) {
         // default
         config.id = `${config.roomId}${new Date().getTime()}`;
@@ -85,16 +90,47 @@ export class ChatWrapperComponent implements OnInit {
     this._userService.getCurrentUser().pipe(first())
       .subscribe(
         user => {
-          const roomId = `${user.id}-${friend.$id}`;
-          this.openChat({
-            title: friend.name,
-            'roomId': roomId,
-            closeable: true,
-            'friend': friend
-          });
-          this._chatService.addChatWait(roomId, friend);
+          let roomId = `${user.id}-${friend.$id}`;
+          this.afDb.object(`chat/friend_list/${roomId}`).snapshotChanges()
+            .subscribe(
+              room => {
+                if (room.key !== null) {
+                  this.openChat({
+                    title: friend.name,
+                    'roomId': roomId,
+                    closeable: true,
+                    'friend': friend
+                  });
+                } else {
+                  roomId = `${friend.$id}-${user.id}`;
+                  this.openChat({
+                    title: friend.name,
+                    'roomId': roomId,
+                    closeable: true,
+                    'friend': friend
+                  });
+                }
+              }
+            );
+          // this._chatService.addChatWait(roomId, friend);
         }
       );
   }
+
+  /*onSelectFriend(friend: ChatFriendModel) {
+  this._userService.getCurrentUser().pipe(first())
+    .subscribe(
+      user => {
+        const roomId = `${user.id}-${friend.$id}`;
+        this.openChat({
+          title: friend.name,
+          'roomId': roomId,
+          closeable: true,
+          'friend': friend
+        });
+        this._chatService.addChatWait(roomId, friend);
+      }
+    );
+}*/
 
 }
