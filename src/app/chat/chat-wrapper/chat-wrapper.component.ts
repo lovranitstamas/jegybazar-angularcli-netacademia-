@@ -16,7 +16,22 @@ import {UserService} from '../../shared/user.service';
 export class ChatWrapperComponent implements OnInit {
   windows$ = new BehaviorSubject<ChatWindowConfig[]>([]);
 
-  constructor(private _userService: UserService) {
+  constructor(
+    private _userService: UserService,
+    private _chatService: ChatService
+  ) {
+    this._chatService.getChatCallWatcher().subscribe(
+      data => {
+        if (data != null && data.length > 0) {
+          data.forEach(
+            call => {
+              this.openChat({ title: call.friend.name, roomId: call.roomId, friend: call.friend });
+              this._chatService.removeWatcher(call.friend.$id);
+            }
+          );
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -70,11 +85,14 @@ export class ChatWrapperComponent implements OnInit {
     this._userService.getCurrentUser().pipe(first())
       .subscribe(
         user => {
+          const roomId = `${user.id}-${friend.$id}`;
           this.openChat({
-            title: friend.name, roomId: `${user.id}-${friend.$id}`,
+            title: friend.name,
+            'roomId': roomId,
             closeable: true,
             'friend': friend
           });
+          this._chatService.addChatWait(roomId, friend);
         }
       );
   }
