@@ -1,4 +1,14 @@
 {
   "simple": "egyszerű",
-  "withvariable": "Hello {{variableValue}}"
+  "withvariable": "Hello {{variableValue}}",
+  "app": {
+    "title": "Jegybazár"
+  },
+  "home": {
+    "labels": {
+      "events": "Események",
+      "tickets": "Jegyek",
+      "registration": "Regisztráció"
+    }
+  }
 }

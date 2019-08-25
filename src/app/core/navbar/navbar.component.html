@@ -2,8 +2,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" routerLink="/home">Jegybazár</a>
-    <button (click)="isCollapsed = !isCollapsed"
+    <a class="navbar-brand" routerLink="/home">{{"app.title" | translate}}</a>
+    <button (click)="toggleMenu()"
             area-controls="navbarNavAltMarkup"
             area-expanded="false"
             area-label="Toggle navigation"
@@ -12,11 +12,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div [collapse]="isCollapsed" class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ml-auto">
-        <app-nav-bar-item url="home" name="Home"></app-nav-bar-item>
-        <app-nav-bar-item url="event" name="Események"></app-nav-bar-item>
-        <app-nav-bar-item url="ticket" name="Jegyek"></app-nav-bar-item>
-        <app-nav-bar-item url="about" name="Rólunk"></app-nav-bar-item>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <app-nav-bar-item url="home" name="Home"></app-nav-bar-item>
+        </li>
+        <li class="nav-item">
+          <app-nav-bar-item url="event" name="Események"></app-nav-bar-item>
+        </li>
+        <li class="nav-item">
+          <app-nav-bar-item url="ticket" name="Jegyek"></app-nav-bar-item>
+        </li>
+        <li class="nav-item">
+          <app-nav-bar-item url="about" name="Rólunk"></app-nav-bar-item>
+        </li>
         <!--<a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">Home</a>
         <a class="nav-item nav-link" routerLink="/event" routerLinkActive="active">Események</a>
         <a class="nav-item nav-link" routerLink="/ticket" routerLinkActive="active">Jegyek</a>
@@ -24,14 +32,28 @@
         <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
           <!--<a class="nav-item nav-link" routerLink="/user/login" routerLinkActive="active">Belépés</a>-->
           <app-nav-bar-item url="/user/login" name="Belépés"></app-nav-bar-item>
-          <a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm"
-             routerLink="/user/registration">Regisztráció</a>
+          <li class="nav-item"><a class="nav-item nav-link btn btn-primary text-light ml-lg-2 btn-sm"
+                                  routerLink="/user/registration">Regisztráció</a></li>
         </ng-container>
         <ng-template #loggedInBlock>
-          <a class="nav-item nav-link tn btn-primary text-light ml-lg-2 btn-sm" routerLinkActive="active" routerLink="/user">Profile</a>
-          <a (click)="logout()" class="nav-item nav-link" routerLinkActive="active">Kijelentkezés</a>
+          <li class="nav-item"><a class="nav-item nav-link tn btn-primary text-light ml-lg-2 btn-sm"
+                                  routerLinkActive="active" routerLink="/user">Profile</a></li>
+          <li class="nav-item"><a (click)="logout()" class="nav-item nav-link"
+                                  routerLinkActive="active">Kijelentkezés</a></li>
         </ng-template>
-      </div>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+             aria-haspopup="true" aria-expanded="false" (click)="toggleLanguageSwitcher($event)">
+            Nyelvváltás
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" [collapse]="isCollapsedLanguageSwitcher">
+            <button class="dropdown-item" [disabled]="currentLang == 'hu'" (click)="selectLang('hu', $event)">Magyar
+            </button>
+            <button class="dropdown-item" [disabled]="currentLang == 'en'" (click)="selectLang('en', $event)">Angol
+            </button>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

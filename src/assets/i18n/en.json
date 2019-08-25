@@ -1,4 +1,14 @@
 {
   "simple": "simple",
-  "withvariable": "Hello {{variableValue}}"
+  "withvariable": "Hello {{variableValue}}",
+  "app": {
+    "title": "Events bid"
+  },
+  "home": {
+    "labels": {
+      "events": "Events",
+      "tickets": "Tickets",
+      "registration": "Registration"
+    }
+  }
 }

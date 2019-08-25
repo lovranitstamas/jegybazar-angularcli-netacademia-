@@ -17,10 +17,10 @@ export class AppComponent {
 
   constructor(
     userService: UserService,
-    translateService: TranslateService
+    // translateService: TranslateService
   ) {
     this.isLoggedIn$ = userService.isLoggedIn$;
-
+/*
     translateService.get('withvariable', this.translateVariable)
       .subscribe(
         res => console.log('translate with variable', res)
@@ -29,7 +29,7 @@ export class AppComponent {
     translateService.get(['simple', 'withvariable'], this.translateVariable)
       .subscribe(
         res => console.log('translate to many', res)
-      );
+      );*/
   }
 
 }

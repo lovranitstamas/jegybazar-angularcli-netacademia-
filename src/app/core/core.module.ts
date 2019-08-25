@@ -7,6 +7,7 @@ import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.compone
 import {NavBarItemComponent} from './nav-bar-item/nav-bar-item.component';
 import {CollapseModule} from 'ngx-bootstrap';
 import {RouterModule} from '@angular/router';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {RouterModule} from '@angular/router';
   imports: [
     CommonModule,
     CollapseModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   exports: [
     NavbarComponent,
