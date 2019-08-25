@@ -1,11 +1,15 @@
 import {
   AfterViewChecked,
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
-  OnInit, Output,
+  OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import {Observable} from 'rxjs';
@@ -17,9 +21,9 @@ import {delay, first} from 'rxjs/operators';
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatWindowComponent implements OnInit, AfterViewChecked {
+export class ChatWindowComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() id: string;
   @Input() roomId; // environment.production ? null : MockedChatDatas.mockedRoomId;
   @Input() title: string;
@@ -31,11 +35,12 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
   @ViewChild('cardBody') cardBody: ElementRef;
   collapseBody = false; // boolean
   @HostBinding('style.height') height = '100%';
-  private shouldScrolling = false;
   @Input() @HostBinding('class.floating') floating = true;
+  private shouldScrolling = false;
 
   constructor(
-    private _chatService: ChatService
+    private _chatService: ChatService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -44,6 +49,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     this.chatMessages$.pipe(first(), delay(500)).subscribe(
       () => {
         this.shouldScrolling = true;
+        this.cdr.detectChanges();
         this.ngAfterViewChecked();
       }
     );
@@ -57,13 +63,25 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  ngAfterViewInit(): void {
+    this.chatMessages$.subscribe(
+      () => {
+        this.shouldScrolling = true;
+        this.cdr.detectChanges();
+        this.ngAfterViewChecked();
+      }
+    );
+    // this.cdr.detach();
+  }
+
   onNewMessage(newMessage: string) {
     this._chatService.addMessage(this.roomId, newMessage)
       .subscribe(
         resp => {
           if (resp) {
             this.resetForm = true;
-            this.shouldScrolling = true;
+            // this.shouldScrolling = true;
+            this.cdr.detectChanges();
           } else {
             alert('Hiba a chat üzenet küldése közben');
           }
@@ -82,6 +100,7 @@ export class ChatWindowComponent implements OnInit, AfterViewChecked {
     } else {
       this.height = '100%';
     }
+    this.cdr.detectChanges();
   }
 
   closeWindow() {
