@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {UserService} from './shared/user.service';
 import {ReplaySubject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,20 @@ export class AppComponent {
   };
 
   constructor(
-    userService: UserService
+    userService: UserService,
+    translateService: TranslateService
   ) {
     this.isLoggedIn$ = userService.isLoggedIn$;
+
+    translateService.get('withvariable', this.translateVariable)
+      .subscribe(
+        res => console.log('translate with variable', res)
+      );
+
+    translateService.get(['simple', 'withvariable'], this.translateVariable)
+      .subscribe(
+        res => console.log('translate to many', res)
+      );
   }
 
 }
