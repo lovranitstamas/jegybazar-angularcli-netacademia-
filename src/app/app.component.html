@@ -3,6 +3,11 @@
 
   <router-outlet></router-outlet>
 </div>
-
+<h3>Fordítás</h3>
+<p>{{'simple' | translate}}</p>
+<p>{{'withvariable' | translate:translateVariable}}</p>
+<h3>Direktivák</h3>
+<p translate>simple</p>
+<p translate="withvariable" [translateParams]="translateVariable"></p>
 <app-footer></app-footer>
-<app-chat-wrapper  *ngIf="isLoggedIn$ | async"></app-chat-wrapper>
+<app-chat-wrapper *ngIf="isLoggedIn$ | async"></app-chat-wrapper>
